@@ -52,9 +52,23 @@ public:
 		this->y = y;
 		cout << "Constructor:\t" << this << endl;
 	}
+	Point(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyConstructor:" << this << endl;
+	}
 	~Point()
 	{
 		cout << "Destructor:\t" << this << endl;
+	}
+
+	//				Operators:
+	void operator=(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyAssignment:\t" << this << endl;
 	}
 
 	//				Methods:
@@ -85,6 +99,8 @@ int g;		//Global variable (Глобальная переменная)	DEPRECATED
 
 //#define STRUCT_POINT
 //#define CONSTRUCTORS_CHECK
+//#define DISTANCE_CHECK
+#define ASSIGNMENT_CHECK
 
 void main()
 {
@@ -123,8 +139,21 @@ A.set_y(3);*/
 
 	Point D(8);	//Single-argument constructor
 	D.print();
+
+	Point E = D;	//CopyConstructor
+	E.print();
+	Point F(B);		//CopyConstructor
+	F.print();
+	/*cout << "\n------------------------------\n";
+	cout << Point(123, 234).distance(Point(345, 456)) << endl;
+	cout << "\n------------------------------\n";*/
+
+	Point G;//Default constructor
+	G = F;	//CopyAssignment (operator=)
+	G.print();
 #endif 
 
+#ifdef DISTANCE_CHECK
 	Point A(2, 3);
 	Point B(3, 4);
 	cout << "Расстояние от точки A до точки B:" << A.distance(B) << endl;
@@ -132,6 +161,20 @@ A.set_y(3);*/
 
 	cout << "Расстояние между точками A и B:  " << distance(A, B) << endl;
 	cout << "Расстояние между точками B и A:  " << distance(B, A) << endl;
+#endif // DISTANCE_CHECK
+
+#ifdef ASSIGNMENT_CHECK
+	int a, b, c;
+	a = b = c = 0;
+	cout << a << tab << b << tab << c << endl;
+
+	Point A, B, C;
+	A = B = C = Point(2, 3);
+	A.print();
+	B.print();
+	C.print();
+#endif // ASSIGNMENT_CHECK
+
 }
 
 /*

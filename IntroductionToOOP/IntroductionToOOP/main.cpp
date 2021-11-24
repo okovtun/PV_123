@@ -3,7 +3,7 @@
 using namespace std;
 using std::cin;
 using std::cout;
-using std::endl;;;;
+using std::endl;
 
 #define tab "\t"
 
@@ -58,16 +58,33 @@ public:
 	}
 
 	//				Methods:
+	double distance(Point other)
+	{
+		//other - дркгой (другая точка)
+		double x_distance = this->x - other.x;
+		double y_distance = this->y - other.y;
+		double distance = sqrt(x_distance*x_distance + y_distance * y_distance);
+		//sqrt - Square Root (Квадратный корень)
+		return distance;
+	}
 	void print()const
 	{
 		cout << "X = " << x << "\tY = " << y << endl;
 	}
 };
 
-//#define STRUCT_POINT
+double distance(Point A, Point B)
+{
+	double x_distance = A.get_x() - B.get_x();
+	double y_distance = A.get_y() - B.get_y();
+	return sqrt(x_distance*x_distance + y_distance * y_distance);
+}
 
 //Point G;	//Global object (Глобальный объект)
 int g;		//Global variable (Глобальная переменная)	DEPRECATED(осуждается)
+
+//#define STRUCT_POINT
+//#define CONSTRUCTORS_CHECK
 
 void main()
 {
@@ -90,10 +107,11 @@ void main()
 	cout << (*pA).x << tab << (*pA).y << endl;
 #endif // STRUCT_POINT
 
+#ifdef CONSTRUCTORS_CHECK
 	Point A;//Default constructor
-	/*A.set_x(2);
-	A.set_y(3);*/
-	//cout << A.get_x() << "\t" << A.get_y() << endl;
+/*A.set_x(2);
+A.set_y(3);*/
+//cout << A.get_x() << "\t" << A.get_y() << endl;
 	A.print();
 
 	Point B(4, 5);
@@ -105,6 +123,15 @@ void main()
 
 	Point D(8);	//Single-argument constructor
 	D.print();
+#endif 
+
+	Point A(2, 3);
+	Point B(3, 4);
+	cout << "Расстояние от точки A до точки B:" << A.distance(B) << endl;
+	cout << "Расстояние от точки B до точки A:" << B.distance(A) << endl;
+
+	cout << "Расстояние между точками A и B:  " << distance(A, B) << endl;
+	cout << "Расстояние между точками B и A:  " << distance(B, A) << endl;
 }
 
 /*

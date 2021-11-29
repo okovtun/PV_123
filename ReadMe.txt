@@ -2,6 +2,9 @@
 https://www.youtube.com/watch?v=AL5ArbG1fy8&list=PLeqyOOqxeiINhkggE6tzeBd_wUr9XEaBJ
 
 TODO:
+В классе Fraction написать метод reduce(), который сокращает протую дробь.
+
+DONE:
 В Solution IntroductionToOOP добавить проект Fraction, и в нем реализовать класс Fraction,
 описывающий простую дробь. В классе должны быть все необходимые методы и операторы.
 

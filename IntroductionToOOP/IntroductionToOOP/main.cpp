@@ -207,20 +207,22 @@ A.set_y(3);*/
 	C.print();
 #endif // ASSIGNMENT_CHECK
 
-	int a = 2;
-	int b = 3;
-	int c = a + b;
+	//int a = 2;
+	//int b = 3;
+	//int c = a + b;
 
-	Point A(2, 3);
-	Point B(4, 5);
-	//Point C = A + B;
-	//C.print();
-	//C++;
-	//C.print();
-	B = ++A;
-	A.print();
-	B.print();
-	A += B;
+	//Point A(2, 3);
+	//Point B(4, 5);
+	////Point C = A + B;
+	////C.print();
+	////C++;
+	////C.print();
+	//B = ++A;
+	//A.print();
+	//B.print();
+	////A += B;
+
+	Point(123, 234).print();
 }
 
 /*

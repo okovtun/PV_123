@@ -1,8 +1,22 @@
 ﻿https://github.com/okovtun/PV_123
 https://www.youtube.com/watch?v=AL5ArbG1fy8&list=PLeqyOOqxeiINhkggE6tzeBd_wUr9XEaBJ
 
+Book:
+https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sharing
+
 TODO:
+1. Перегрузить все недостающие операторы: +, -, +=, -=, /=;
+2. Для класса Fraction перегрузить операторы сравнения:
+	==
+	!=
+	>
+	<
+	>=
+	<=
+
+DONE:
 В классе Fraction написать метод reduce(), который сокращает протую дробь.
+https://www.webmath.ru/poleznoe/formules_12_7.php
 
 DONE:
 В Solution IntroductionToOOP добавить проект Fraction, и в нем реализовать класс Fraction,

@@ -1,4 +1,7 @@
 ﻿//Fraction
+
+#pragma warning (disable:4326)	//Отключаем Warning по коду.
+
 #include<iostream>
 using std::cin;
 using std::cout;
@@ -46,8 +49,10 @@ public:
 		this->denominator = 1;
 		cout << "DefaultConstruct:\t" << this << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
+		//explicit - явный.
+		//explicit разрешает только явные преобразования.
 		this->integer = integer;
 		this->numerator = 0;
 		this->denominator = 1;
@@ -73,10 +78,24 @@ public:
 	}
 
 	//					Operators:
+	Fraction& operator=(const Fraction& other)
+	{
+		this->integer = other.integer;
+		this->numerator = other.numerator;
+		this->denominator = other.denominator;
+		cout << "CopyAssignment:\t" << this << endl;
+		return *this;
+	}
 	Fraction& operator*=(const Fraction& other)
 	{
 		return *this = *this*other;
 		//		 A	 =	 A  *  B
+	}
+
+	//				Type-cast operators:
+	explicit operator int()const
+	{
+		return integer;
 	}
 
 	//					Methods:
@@ -165,6 +184,13 @@ Fraction operator/(Fraction left, Fraction right)
 }
 
 //#define CONSTRUCTORS_CHECK
+//#define OPERATORS_CHECK
+//#define TYPE_CONVERSIONS_BASICS
+//#define CONVERSIONS_FROM_OTHER_TO_CLASS
+//#define CONVERSIONS_FROM_CLASS_TO_OTHER
+#define HOME_WORK
+#define HOME_WORK_1
+#define HOME_WORK_2
 
 void main()
 {
@@ -185,6 +211,7 @@ void main()
 	D.print();
 #endif // CONSTRUCTORS_CHECK
 
+#ifdef OPERATORS_CHECK
 	double a = 2.5;
 	double b = 3.4;
 	double c = a * b;
@@ -206,4 +233,62 @@ void main()
 	A.operator*=(B);
 	A.print();
 	A = A * B;
+#endif // OPERATORS_CHECK
+
+#ifdef TYPE_CONVERSIONS_BASICS
+	//(type)value;	//C-like notation		(C-подобная форма записи)
+//type(value);	//Functional notation	(Функциональная форма записи)
+//Warning: ... conversion from 'type' to 'type' possible loss of data.
+
+	int a = 2;		//No converion (Нет преобразования)
+	double b = 3;	//From less to more (От меньшего к бОльшему)
+	int c = b;		//From more to less without data loss (От большего к меншему без потери данных)
+	int d = 4.5;	//From more to less with data loss (От большего к меньшему с поторей данных)
+	cout << d << endl;
+#endif // TYPE_CONVERSIONS_BASICS
+
+#ifdef CONVERSIONS_FROM_OTHER_TO_CLASS
+	double a = 2;	//From 'int' to 'double'
+	Fraction A = (Fraction)5;	//From 'int' to 'Fraction'
+		//Single-argument constructor
+	A.print();
+	Fraction B;
+	cout << "\n----------------------------------\n";
+	B = Fraction(8);		//CopyAssignment
+	cout << "\n----------------------------------\n";
+	B.print();
+
+	//Fraction C = 12;	//explicit constructor невозможно вызвать так
+	Fraction C(12);		//НО explicit constructor всегда можно вызвать так  
+#endif // CONVERSIONS_FROM_OTHER_TO_CLASS
+
+#ifdef CONVERSIONS_FROM_CLASS_TO_OTHER
+			//						Type-cast operators:
+/*operator type()
+{
+	....
+	....
+}*/
+
+	double b = 2;
+	int c = b;		//From more to less
+					//From 'double' to 'int'
+
+	Fraction A(2);
+	int a{ A };		//From more to less
+					//From 'Fraction' to 'int'
+	cout << a << endl;
+	int i = (int)A;
+	int j = int(A);
+#endif // CONVERSIONS_FROM_CLASS_TO_OTHER
+
+#ifdef HOME_WORK
+	Fraction A(2, 3, 4);
+	double a = A;
+	cout << a << endl;
+
+	double b = 2.75;
+	Fraction B = b;
+	B.print();
+#endif // HOME_WORK
 }

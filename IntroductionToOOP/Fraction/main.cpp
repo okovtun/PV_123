@@ -106,7 +106,7 @@ public:
 	{
 		return integer;
 	}
-	operator double()const
+	explicit operator double()const
 	{
 		return integer + (double)numerator / denominator;
 	}
@@ -158,17 +158,17 @@ public:
 		to_improper();
 		return Fraction(this->denominator, this->numerator);
 	}
-	void print()const
+	std::ostream& print(std::ostream& os = cout)const
 	{
-		if (integer)cout << integer;//Если есть целая часть, выводим ее на экран
+		if (integer)os << integer;//Если есть целая часть, выводим ее на экран
 		if (numerator)
 		{
-			if (integer)cout << "(";
-			cout << numerator << "/" << denominator;
-			if (integer)cout << ")";
+			if (integer)os << "(";
+			os << numerator << "/" << denominator;
+			if (integer)os << ")";
 		}
-		else if (integer == 0)cout << 0;
-		cout << endl;
+		else if (integer == 0)os << 0;
+		return os;
 	}
 };
 
@@ -196,12 +196,28 @@ Fraction operator/(Fraction left, Fraction right)
 	return left * right.inverted();
 }
 
+//	type		name	(			parameters			)
+std::ostream& operator<<(std::ostream& os, const Fraction& obj)
+{
+	//os - output stream
+	/*if (obj.get_integer())os << obj.get_integer();//Если есть целая часть, выводим ее на экран
+	if (obj.get_numerator())
+	{
+		if (obj.get_integer())os << "(";
+		os << obj.get_numerator() << "/" << obj.get_denominator();
+		if (obj.get_integer())os << ")";
+	}
+	else if (obj.get_integer() == 0)os << 0;
+	return os;*/
+	return obj.print(os);
+}
+
 //#define CONSTRUCTORS_CHECK
 //#define OPERATORS_CHECK
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERSIONS_FROM_OTHER_TO_CLASS
 //#define CONVERSIONS_FROM_CLASS_TO_OTHER
-#define HOME_WORK
+//#define HOME_WORK
 #define HOME_WORK_1
 #define HOME_WORK_2
 
@@ -305,4 +321,8 @@ void main()
 	Fraction B = b;	//Преобразуем другой тип в наш, для этого нужен конструктор с одним параметром типа double
 	B.print();
 #endif // HOME_WORK
+
+	Fraction A(2, 3, 4);
+	cout << A << endl;
+	A.print();
 }

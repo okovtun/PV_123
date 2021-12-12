@@ -4,7 +4,17 @@ https://www.youtube.com/watch?v=AL5ArbG1fy8&list=PLeqyOOqxeiINhkggE6tzeBd_wUr9XE
 Book:
 https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sharing
 
+TOREAD:
+https://www.softelectro.ru/ieee754.html
+
 TODO:
+Перегрузить оператор ввода:
+	Fraction A;
+	cout << "Введите простую дробь: "; cin >> A;
+	cout << A << endl;
+cin является объектом класса istream.
+
+DONE:
 Проверочный код в секции HOME_WORK должен заработать:
 	Fraction A(2, 3, 4);
 	double a = A;

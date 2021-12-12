@@ -58,6 +58,15 @@ public:
 		this->denominator = 1;
 		cout << "1argConstructor:\t" << this << endl;
 	}
+	Fraction(double decimal)
+	{
+		decimal += 1e-11;
+		integer = decimal;
+		denominator = 1e+9;	//1*10^9
+		decimal -= integer;	//Убираем целую часть из десятичной дроби
+		numerator = decimal*denominator;
+		reduce();
+	}
 	Fraction(int numerator, int denominator)
 	{
 		this->integer = 0;
@@ -96,6 +105,10 @@ public:
 	explicit operator int()const
 	{
 		return integer;
+	}
+	operator double()const
+	{
+		return integer + (double)numerator / denominator;
 	}
 
 	//					Methods:
@@ -283,12 +296,13 @@ void main()
 #endif // CONVERSIONS_FROM_CLASS_TO_OTHER
 
 #ifdef HOME_WORK
+	cout << ULLONG_MAX << endl;
 	Fraction A(2, 3, 4);
-	double a = A;
+	double a = A;	//Преобразуем наш тип в другой тип (оператор преобразования)
 	cout << a << endl;
 
-	double b = 2.75;
-	Fraction B = b;
+	double b = 2.7711122;
+	Fraction B = b;	//Преобразуем другой тип в наш, для этого нужен конструктор с одним параметром типа double
 	B.print();
 #endif // HOME_WORK
 }

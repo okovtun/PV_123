@@ -211,6 +211,62 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	return os;*/
 	return obj.print(os);
 }
+std::istream& operator>>(std::istream& is, Fraction& obj)
+{
+	/*int integer;
+	int numerator;
+	int denominator;
+	is >> integer >> numerator >> denominator;
+	obj.set_integer(integer);
+	obj.set_numerator(numerator);
+	obj.set_denominator(denominator);*/
+
+	obj = Fraction();	//Обнуляем объект
+
+	const int SIZE = 256;
+	char buffer[SIZE] = {};		//Вводимая строка
+	char delimiters[] = "() /";	//Разделители
+	is.getline(buffer, SIZE);
+	char* number[3] = {};	//Этот массив будет хранить части строки, полученные при помощи strtok
+	int n = 0;	//Индекс элемента в массиве number
+
+	for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
+	{
+		number[n++] = pch;
+	}
+
+	/*number[0] = strtok(buffer, delimiters);
+	number[1] = strtok(NULL, delimiters);
+	number[2] = strtok(NULL, delimiters);
+	n = 3;*/
+	/*char* pch = strtok(buffer, delimiters);
+	while (pch)
+	{
+		number[n++] = pch;
+		pch = strtok(NULL, delimiters);
+	}*/
+	/*for (int i = 0; i < n; i++)
+	{
+		cout << number[i] << "\t";
+	}
+	cout << endl;*/
+
+	switch (n)
+	{
+	case 1: obj.set_integer(atoi(number[0])); break;
+		//atoi() - ASCII-string to integer, преобразует строку ASCII-символов в значение типа int
+	case 2:
+		obj.set_numerator(atoi(number[0]));
+		obj.set_denominator(atoi(number[1]));
+		break;
+	case 3:
+		obj.set_integer(atoi(number[0]));
+		obj.set_numerator(atoi(number[1]));
+		obj.set_denominator(atoi(number[2]));
+	}
+
+	return is;
+}
 
 //#define CONSTRUCTORS_CHECK
 //#define OPERATORS_CHECK
@@ -322,7 +378,11 @@ void main()
 	B.print();
 #endif // HOME_WORK
 
-	Fraction A(2, 3, 4);
+	/*Fraction A(2, 3, 4);
 	cout << A << endl;
-	A.print();
+	A.print();*/
+
+	Fraction A(2,3,4);
+	cout << "Введите простую дробь: "; cin >> A;
+	cout << A << endl;
 }

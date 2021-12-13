@@ -8,6 +8,17 @@ TOREAD:
 https://www.softelectro.ru/ieee754.html
 
 TODO:
+В отдельном проекте реализовать класс String, описывающий строку.
+Класс должен обеспечивать создание объектов следующим образом:
+	String str;	//Пустая строка размером 80 Байт
+	String str1 = "Hello";
+	String str2 = "World";
+**	String str3 = str1 + str2;
+**	cout << str3 << endl;
+
+	String str4(25);	//Создает пустую строку размером 25 Байт
+
+DONE:
 Перегрузить оператор ввода:
 	Fraction A;
 	cout << "Введите простую дробь: "; cin >> A;

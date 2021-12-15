@@ -8,13 +8,28 @@ TOREAD:
 https://www.softelectro.ru/ieee754.html
 
 TODO:
-В отдельном проекте реализовать класс String, описывающий строку.
-Класс должен обеспечивать создание объектов следующим образом:
-	String str;	//Пустая строка размером 80 Байт
+1. В операторе + вместо выражения 
+	result.get_str()[i] = left.get_str()[i];
+   использовать выражение:
+    result[i] = left[i];
+2. Для класса String перегрузить оператор +=
 	String str1 = "Hello";
 	String str2 = "World";
-**	String str3 = str1 + str2;
-**	cout << str3 << endl;
+	str1 += str2;
+	cout << str1 << endl;	//HelloWorld
+3. Перегрузить оператор ввода
+	String str;
+	cout << "Введите строку: "; cin >> str;
+	cout << str;
+
+DONE:
+В отдельном проекте реализовать класс String, описывающий строку.
+Класс должен обеспечивать создание объектов следующим образом:
+	String str;	//Пустая строка размером 80 Байт	DONE
+	String str1 = "Hello";			DONE
+	String str2 = "World";			DONE
+**	String str3 = str1 + str2;		DONE
+**	cout << str3 << endl;			DONE
 
 	String str4(25);	//Создает пустую строку размером 25 Байт
 

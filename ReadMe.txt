@@ -8,7 +8,7 @@ TOREAD:
 https://www.softelectro.ru/ieee754.html
 
 TODO:
-1. В операторе + вместо выражения 
+1. В операторе + вместо выражения DONE
 	result.get_str()[i] = left.get_str()[i];
    использовать выражение:
     result[i] = left[i];

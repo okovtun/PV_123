@@ -26,24 +26,26 @@ public:
 		return str;
 	}
 
-	explicit String(int size = 80)
+	explicit String(int size = 80) :size(size), str(new char[size] {})
 	{
-		this->size = size;
-		this->str = new char[size] {};	//Память, выделяемую для строки обязательно нужно занулить
+		//this->size = size;
+		//this->str = new char[size] {};	//Память, выделяемую для строки обязательно нужно занулить
 		cout << "SizeConstructor:\t" << this << endl;
 	}
-	String(const char str[])
+	String(const char str[]) 
+		:size(strlen(str) + 1), 
+		str(new char[size] {})
 	{
-		this->size = strlen(str) + 1;
-		this->str = new char[size]{};
+		/*this->size = strlen(str) + 1;
+		this->str = new char[size]{};*/
 		for (int i = 0; str[i]; i++)this->str[i] = str[i];
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other)
+	String(const String& other) :size(other.size), str(new char[size] {})
 	{
 		//Deep copy (Побитовое копирование):
-		this->size = other.size;
-		this->str = new char[size] {};
+		//this->size = other.size;
+		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:\t" << this << endl;
 	}
@@ -127,6 +129,7 @@ std::istream& getline(std::istream& is, String& obj)
 
 //#define CONSTRUCTORS_CHECK
 //#define OPERATORS_CHECK
+//#define INPUT_CHECK
 
 void main()
 {
@@ -174,11 +177,31 @@ void main()
 	cout << delimiter << endl;
 #endif // OPERATORS_CHECK
 
-
+#ifdef INPUT_CHECK
 	String str;
-	cout << "Введите строку: "; 
+	cout << "Введите строку: ";
 	//cin >> str;
 	getline(cin, str);
 	cout << str << endl;
 	str.print();
+#endif // INPUT_CHECK
+
+	String str1;			//Default constructor
+	str1.print();
+	String str2 = "Hello";	//Signle-argument constructor
+	str2.print();
+	String str3 = str2;		//CopyConstructor
+	str3.print();
+	//
+	String str4();			//Здесь НЕ вызывается никакой конструктор, 
+							//поскольку здесь не создается объект, 
+							//а объявляется функция str4(), 
+							//которая ничего не принимает,
+							//и возвращает значение типа String.
+	//str4.print();	//str4 - это функция, а не объект
+	String str5{};	//Default constructor
+	str5.print();
+
+	String str6("World");	//Signle-argument constructor
+	String str7{ "Planet" };//Signle-argument constructor
 }

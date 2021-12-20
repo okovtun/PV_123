@@ -26,25 +26,17 @@ public:
 		return str;
 	}
 
-	explicit String(int size = 80)
+	explicit String(int size = 80) :size(size), str(new char[size] {})
 	{
-		this->size = size;
-		this->str = new char[size] {};	//Память, выделяемую для строки обязательно нужно занулить
 		cout << "SizeConstructor:\t" << this << endl;
 	}
-	String(const char str[])
+	String(const char str[]) :String(strlen(str) + 1)
 	{
-		this->size = strlen(str) + 1;
-		this->str = new char[size]{};
 		for (int i = 0; str[i]; i++)this->str[i] = str[i];
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other)
+	String(const String& other):String(other.str)
 	{
-		//Deep copy (Побитовое копирование):
-		this->size = other.size;
-		this->str = new char[size] {};
-		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:\t" << this << endl;
 	}
 	~String()
@@ -70,7 +62,7 @@ public:
 		return *this = *this + other;
 	}
 
-	const char& operator[](int i)const 
+	const char& operator[](int i)const
 	{
 		return str[i];
 	}
@@ -93,10 +85,10 @@ String operator+(const String& left, const String& right)
 	for (int i = 0; i < left.get_size(); i++)
 		//l-value = r-value;
 		result[i] = left[i];
-		//result.get_str()[i] = left.get_str()[i];
+	//result.get_str()[i] = left.get_str()[i];
 	for (int i = 0; i < right.get_size(); i++)
 		result[i + left.get_size() - 1] = right[i];
-		//result.get_str()[i + left.get_size() - 1] = right.get_str()[i];
+	//result.get_str()[i + left.get_size() - 1] = right.get_str()[i];
 	return result;
 }
 
@@ -107,7 +99,7 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 std::istream& operator>>(std::istream& is, String& obj)
 {
 	//return is >> obj.get_str();
-	const int SIZE = 1024*1000;
+	const int SIZE = 1024 * 1000;
 	char buffer[SIZE] = {};
 	is >> buffer;
 	obj = buffer;
@@ -126,7 +118,8 @@ std::istream& getline(std::istream& is, String& obj)
 //char str[] = { 'S', 't', 'r', 'o', 'k', 'a' };
 
 //#define CONSTRUCTORS_CHECK
-//#define OPERATORS_CHECK
+#define OPERATORS_CHECK
+//#define INPUT_CHECK
 
 void main()
 {
@@ -175,10 +168,13 @@ void main()
 #endif // OPERATORS_CHECK
 
 
+#ifdef INPUT_CHECK
 	String str;
-	cout << "Введите строку: "; 
+	cout << "Введите строку: ";
 	//cin >> str;
 	getline(cin, str);
 	cout << str << endl;
 	str.print();
+#endif // INPUT_CHECK
+
 }

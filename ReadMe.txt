@@ -7,7 +7,10 @@ https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sha
 TOREAD:
 https://www.softelectro.ru/ieee754.html
 
-TODO:
+Почитать про MoveConstructor и MoveAssignment
+http://cplusplus.com/doc/tutorial/classes2/
+
+DONE:
 1. В операторе + вместо выражения DONE
 	result.get_str()[i] = left.get_str()[i];
    использовать выражение:

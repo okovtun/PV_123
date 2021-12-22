@@ -2,7 +2,9 @@
 using std::cin;
 using std::cout;
 using std::endl;
-
+//Move-методы:
+//MoveConstructor - Конструктор переноса
+//MoveAssignment  - Оператор присваивания-переноса
 #define delimiter "\n-------------------------------------------------\n"
 
 class String;
@@ -47,6 +49,17 @@ public:
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:\t" << this << endl;
 	}
+	String(String&& other)noexcept//никогда не бросает исключение
+	{
+		//MoveConstructor должен выполнять поверхностное копирование (Shallow copy)
+		this->size = other.size;
+		this->str = other.str;//просто копируем адрес памяти, пренадлещаей другому объекту
+		//Зануляем другой объект, для того, чтобы его память не смог удалить деструктор:
+		other.size = 0;
+		other.str = nullptr;
+		
+		cout << "MoveConstructor:\t" << this << endl;
+	}
 	~String()
 	{
 		delete[] str;
@@ -56,6 +69,8 @@ public:
 	//					Operators:
 	String& operator=(const String& other)
 	{
+
+		//l-value = r-value;
 		if (this == &other)return *this;	//Проверяем, не являются ли this и other одним и тем же объектом
 		delete[] this->str;
 		//Deep copy (Побитовое копирование):
@@ -65,6 +80,25 @@ public:
 		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
+	String& operator=(String&& other)
+	{
+		if (this == &other)return *this;
+		delete this->str;
+		this->size = other.size;
+		this->str = other.str;
+
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveAssignment:\t" << this << endl;
+		return *this;
+	}
+
+	//Class(const Class& other);	//CopyConstructor
+	//Class& operator=(const Class& other);	//CopyAssignment
+
+	//Class(Class&& other);			//MoveConstructor
+	//Class& operator=(Class&& other);		//MoveAssignment
+
 	String& operator+=(const String& other)
 	{
 		return *this = *this + other;
@@ -126,7 +160,7 @@ std::istream& getline(std::istream& is, String& obj)
 //char str[] = { 'S', 't', 'r', 'o', 'k', 'a' };
 
 //#define CONSTRUCTORS_CHECK
-//#define OPERATORS_CHECK
+#define OPERATORS_CHECK
 
 void main()
 {
@@ -160,25 +194,27 @@ void main()
 	int a = 2;
 	int b = 3;
 	int c = a + b;
-
+	
 	String str1 = "Hello";
 	String str2 = "World";
 	cout << delimiter << endl;
-	String str3 = str1 + str2;
+	String str3;
+	str3 = str1 + str2;
 	cout << delimiter << endl;
 	cout << str3 << endl;
 	cout << delimiter << endl;
-	str1 += str2;
+	String str4 = str3;	//CopyConstructor - Deep copy
+	/*str1 += str2;
 	cout << delimiter << endl;
 	cout << str1 << endl;
-	cout << delimiter << endl;
+	cout << delimiter << endl;*/
 #endif // OPERATORS_CHECK
 
 
-	String str;
-	cout << "Введите строку: "; 
-	//cin >> str;
-	getline(cin, str);
-	cout << str << endl;
-	str.print();
+	//String str;
+	//cout << "Введите строку: "; 
+	////cin >> str;
+	//getline(cin, str);
+	//cout << str << endl;
+	//str.print();
 }

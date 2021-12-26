@@ -137,23 +137,33 @@ public:
 	}
 };
 
-Binary operator|(const Binary& left, const Binary& right)
+Binary operator|(Binary left, Binary right)
 {
+	//Binary result;
+	////Определяем большую и меньшую разрядность:
+	//int max_capacity = left.get_capacity() < right.get_capacity() ?
+	//	right.get_capacity() : left.get_capacity();
+	//int min_capacity = left.get_capacity() > right.get_capacity() ?
+	//	right.get_capacity() : left.get_capacity();
+	////Задаем результату большую разрядность:
+	//result.set_capacity(max_capacity);
+	////Проходим по минимальной разрядности, и записываем минимальное количество разрядов в результат:
+	//for (int i = 0; i < min_capacity; i++)
+	//	result.get_number()[i] = (left.get_number()[i] == 1 || right.get_number()[i] == 1) ? 1 : 0;
+	////Проходим по большей разрядности, и копируем оставшиеся разряды в результат:
+	//for (int i = min_capacity; i < max_capacity; i++)
+	//	result.get_number()[i] = left.get_capacity() > right.get_capacity() ?
+	//	left.get_number()[i] : right.get_number()[i];
+	//return result;
+
+	if (left.get_capacity() > right.get_capacity())
+		right.set_capacity(left.get_capacity());
+	else
+		left.set_capacity(right.get_capacity());
 	Binary result;
-	//Определяем большую и меньшую разрядность:
-	int max_capacity = left.get_capacity() < right.get_capacity() ?
-		right.get_capacity() : left.get_capacity();
-	int min_capacity = left.get_capacity() > right.get_capacity() ?
-		right.get_capacity() : left.get_capacity();
-	//Задаем результату большую разрядность:
-	result.set_capacity(max_capacity);
-	//Проходим по минимальной разрядности, и записываем минимальное количество разрядов в результат:
-	for (int i = 0; i < min_capacity; i++)
-		result.get_number()[i] = (left.get_number()[i] == 1 || right.get_number()[i] == 1) ? 1 : 0;
-	//Проходим по большей разрядности, и копируем оставшиеся разряды в результат:
-	for (int i = min_capacity; i < max_capacity; i++)
-		result.get_number()[i] = left.get_capacity() > right.get_capacity() ?
-		left.get_number()[i] : right.get_number()[i];
+	result.set_capacity(left.get_capacity());
+	for (int i = 0; i < result.get_capacity(); i++)
+		result.get_number()[i] = left.get_number()[i] || right.get_number()[i] ? 1 : 0;
 	return result;
 }
 

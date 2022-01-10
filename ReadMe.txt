@@ -12,6 +12,15 @@ https://app.creately.com/diagram/start/dashboard
 ////////////////					INHERITANCE					//////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
+http://cplusplus.com/reference/string/string/
+http://cplusplus.com/reference/string/string/find_first_not_of/
+http://cplusplus.com/reference/string/string/find_last_not_of/
+
+https://www.boost.org/doc/libs/1_78_0/?view=categorized
+https://www.boost.org/doc/libs/1_78_0/doc/html/string_algo.html
+
+Base:https://www.youtube.com/watch?v=htkSiXnrqHQ&list=PLeqyOOqxeiIMc8VmOKgzH2KDPzAhl5Gc3
+
 TODO:
 1.*Сохранить группу в файл;
 2.***Загрузить группу из файла;

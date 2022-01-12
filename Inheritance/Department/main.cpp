@@ -1,8 +1,10 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<string>
 using namespace std;
 
-#define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age	//Принимаемые переметры конструктора Human
+//#define DEBUG
+
+#define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age	//РџСЂРёРЅРёРјР°РµРјС‹Рµ РїРµСЂРµРјРµС‚СЂС‹ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° Human
 #define HUMAN_GIVE_PARAMETERS last_name, first_name, age
 
 class Human
@@ -42,26 +44,39 @@ public:
 		set_last_name(last_name);
 		set_first_name(first_name);
 		set_age(age);
+#ifdef DEBUG
 		cout << "HConstructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	virtual ~Human()
 	{
+#ifdef DEBUG
 		cout << "HDestructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	//				Methods:
 	virtual void print()const
 	{
-		cout << last_name << " " << first_name << " " << age << " лет" << endl;
+		cout << last_name << " " << first_name << " " << age << " Р»РµС‚" << endl;
 	}
 };
+
+ostream& operator<<(ostream& os, const Human& obj)
+{
+	return os << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age() << " Р»РµС‚.";
+}
 
 #define EMPLOYEE_TAKE_PARAMETERS	const std::string& position
 #define EMPLOYEE_GIVE_PARAMETERS	position
 
-class Employee :public Human	//Наследование
+
+//РђР‘РЎРўР РђРљРўРќР«Р™ РљР›РђРЎРЎ
+class Employee :public Human	//РќР°СЃР»РµРґРѕРІР°РЅРёРµ
 {
-	std::string position;	//Должность
+	std::string position;	//Р”РѕР»Р¶РЅРѕСЃС‚СЊ
 public:
 	const std::string& get_position()const
 	{
@@ -73,14 +88,20 @@ public:
 	}
 	virtual double get_salary()const = 0;
 
-	Employee(HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS):Human(HUMAN_GIVE_PARAMETERS)//Делегирование
+	Employee(HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS)//Р”РµР»РµРіРёСЂРѕРІР°РЅРёРµ
 	{
 		set_position(position);
+#ifdef DEBUG
 		cout << "EConstructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	~Employee()
 	{
+#ifdef DEBUG
 		cout << "EDestructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 
 	void print()const
@@ -91,12 +112,19 @@ public:
 	}
 };
 
+ostream& operator<<(ostream& os, const Employee& obj)
+{
+	//os << (Human)obj;
+	return os << (Human)obj << obj.get_position();
+}
+
 #define PERMANENT_EMPLOYEE_TAKE_PARAMETERS double salary
 #define PERMANENT_EMPLOYEE_GIVE_PARAMETERS salary
 
+//РљРћРќРљР Р•РўРќР«Р™ РљР›РђРЎРЎ
 class PermanentEmployee : public Employee
 {
-	double salary;	//Зарплата
+	double salary;	//Р—Р°СЂРїР»Р°С‚Р°
 public:
 	double get_salary()const
 	{
@@ -109,7 +137,7 @@ public:
 
 	PermanentEmployee
 	(
-		HUMAN_TAKE_PARAMETERS,	EMPLOYEE_TAKE_PARAMETERS, PERMANENT_EMPLOYEE_TAKE_PARAMETERS
+		HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS, PERMANENT_EMPLOYEE_TAKE_PARAMETERS
 	) :Employee(HUMAN_GIVE_PARAMETERS, EMPLOYEE_GIVE_PARAMETERS)
 	{
 		set_salary(salary);
@@ -128,13 +156,19 @@ public:
 	}
 };
 
+ostream& operator<<(ostream& os, const PermanentEmployee& obj)
+{
+	return os << (Employee&)obj << " " << obj.get_salary();
+}
+
 #define HOURLY_EMPLOYEE_TAKE_PARAMETERS double rate, int hours
 #define HOURLY_EMPLOYEE_GIVE_PARAMETERS rate, hours
 
+//РљРћРќРљР Р•РўРќР«Р™ РљР›РђРЎРЎ
 class HourlyEmployee :public Employee
 {
-	double rate;	//Тариф (ставка за 1 час)
-	int hours;		//Количество отработанных часов
+	double rate;	//РўР°СЂРёС„ (СЃС‚Р°РІРєР° Р·Р° 1 С‡Р°СЃ)
+	int hours;		//РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚СЂР°Р±РѕС‚Р°РЅРЅС‹С… С‡Р°СЃРѕРІ
 public:
 	double get_rate()const
 	{
@@ -173,10 +207,18 @@ public:
 	void print()const
 	{
 		Employee::print();
-		cout << " тариф:" << rate << ",отработано:" << hours << " итого:" << get_salary();
+		cout << " С‚Р°СЂРёС„:" << rate << ",РѕС‚СЂР°Р±РѕС‚Р°РЅРѕ:" << hours << " РёС‚РѕРіРѕ:" << get_salary();
 		cout << endl;
 	}
 };
+
+ostream& operator<<(ostream& os, const HourlyEmployee& obj)
+{
+	return os
+		<< (Employee&)obj
+		<< "rate: " << obj.get_rate() << "hours:" << obj.get_hours()
+		<< "total: " << obj.get_salary();
+}
 
 void main()
 {
@@ -185,6 +227,7 @@ void main()
 	cout << typeid(str.c_str()).name() << endl;
 
 	setlocale(LC_ALL, "");
+	//Generalisation(UPCAST):
 	Employee* department[] =
 	{
 		new PermanentEmployee("Rosenberg", "Ken", 30, "Lawyer", 2000),
@@ -192,18 +235,29 @@ void main()
 		new HourlyEmployee("Vercetty", "Tomas", 30, "Security", 500, 8)
 	};
 
-	double total_salary = 0;	//Общая зарплата
-	//sizeof(department) / sizeof(Employee*) - Делим размер массива в Байтах на размер одного указателя,
-	//и таким образом получаем размер массива в элементах.
+	double total_salary = 0;	//РћР±С‰Р°СЏ Р·Р°СЂРїР»Р°С‚Р°
+	//sizeof(department) / sizeof(Employee*) - Р”РµР»РёРј СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° РІ Р‘Р°Р№С‚Р°С… РЅР° СЂР°Р·РјРµСЂ РѕРґРЅРѕРіРѕ СѓРєР°Р·Р°С‚РµР»СЏ,
+	//Рё С‚Р°РєРёРј РѕР±СЂР°Р·РѕРј РїРѕР»СѓС‡Р°РµРј СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° РІ СЌР»РµРјРµРЅС‚Р°С….
 	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)
 	{
 		cout << "\n--------------------------------------\n";
 		//department[i]->print();
-		cout << *department[i] << endl;
+		cout << typeid(*department[i]).name() << endl;
+		//Specialisation(DOWNCAST):
+
+		//int - int
+		//int* - РЈРєР°Р·Р°С‚РµР»СЊ РЅР° int
+
+		if(typeid(*department[i]) == typeid(PermanentEmployee))	
+			cout << *dynamic_cast<PermanentEmployee*>(department[i]) << endl;
+		if(typeid(*department[i]) == typeid(HourlyEmployee))
+			cout << *dynamic_cast<HourlyEmployee*>(department[i]) << endl;
+		//dynamic_cast<DerivedClass*>(BaseClass*);
+		//dynamic_cast<Р¦РµР»РµРІРѕР№РўРёРї>(РџСЂРµРѕР±СЂР°Р·СѓРµРјРѕРµР—РЅР°С‡РµРЅРёРµ)
 		total_salary += department[i]->get_salary();
 	}
 	cout << "\n--------------------------------------\n";
-	cout << "Общая зарплата всего отдела: " << total_salary << endl;
+	cout << "РћР±С‰Р°СЏ Р·Р°СЂРїР»Р°С‚Р° РІСЃРµРіРѕ РѕС‚РґРµР»Р°: " << total_salary << endl;
 	cout << "\n--------------------------------------\n";
 
 	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)

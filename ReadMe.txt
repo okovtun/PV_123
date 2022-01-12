@@ -12,6 +12,12 @@ https://app.creately.com/diagram/start/dashboard
 ////////////////					INHERITANCE					//////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
+TODO:
+1. Реализовать операторы вывода используя Полиморфизм, чтобы избавиться от dynamic_cast;
+2. ***Построить иерархию геометрических фигур: Квадрат, Прямоугольник, Круг, Треугольник.
+   Для каждой фигуры вывести ее особые свойства (первичные параметры), площадь, периметр 
+   и наривать каждую фигуру.
+
 http://cplusplus.com/reference/string/string/
 http://cplusplus.com/reference/string/string/find_first_not_of/
 http://cplusplus.com/reference/string/string/find_last_not_of/

@@ -7,22 +7,22 @@
       <FileName>main.cpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Employee">
-    <Position X="1.75" Y="1.75" Width="1.5" />
+  <Class Name="Employee" Collapsed="true">
+    <Position X="1.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAACAAAAAAIAAACAAAAAAABgAAAAIAAAA=</HashCode>
       <FileName>main.cpp</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PermanentEmployee">
-    <Position X="0.75" Y="5" Width="1.5" />
+    <Position X="0.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAgAEAAgAAAAAAAAAAAgAAABAAAAAAAAAA=</HashCode>
       <FileName>main.cpp</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="HourlyEmployee">
-    <Position X="2.75" Y="5" Width="1.5" />
+    <Position X="2.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAEVAAAQAAAAAAAAAAAAAEAEAAAAAABAAAAAAAACA=</HashCode>
       <FileName>main.cpp</FileName>

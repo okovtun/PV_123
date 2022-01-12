@@ -198,7 +198,8 @@ void main()
 	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)
 	{
 		cout << "\n--------------------------------------\n";
-		department[i]->print();
+		//department[i]->print();
+		cout << *department[i] << endl;
 		total_salary += department[i]->get_salary();
 	}
 	cout << "\n--------------------------------------\n";

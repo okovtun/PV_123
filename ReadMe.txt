@@ -12,6 +12,15 @@ https://app.creately.com/diagram/start/dashboard
 ////////////////					INHERITANCE					//////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
+https://www.youtube.com/watch?v=UluSI1P4Ijg&list=PLBOPkQsFLCR2H7_0Ss0W6y703J_ySRGi_
+
+TODO:
+1. При помощи width() и left/right выровнять вывод во всех дочерних классах;
+2. Обеспечить ввод объектов PermanentEmployee и HourlyEmployee с клавиатуры;
+	PermanentEmployee pe;
+	cout << "Введите информацию о сотруднике: ";
+	cin >> pe;
+
 http://cplusplus.com/reference/string/string/
 http://cplusplus.com/reference/string/string/find_first_not_of/
 http://cplusplus.com/reference/string/string/find_last_not_of/

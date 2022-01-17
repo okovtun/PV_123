@@ -15,6 +15,11 @@ https://app.creately.com/diagram/start/dashboard
 https://www.youtube.com/watch?v=UluSI1P4Ijg&list=PLBOPkQsFLCR2H7_0Ss0W6y703J_ySRGi_
 
 TODO:
+1. Почитать про *.csv-файлы;
+2. В проекте Academy сохранить группу в файл;
+3. В проекте Academy загрузить группу из файла;
+
+DONE:
 1. При помощи width() и left/right выровнять вывод во всех дочерних классах;
 2. Обеспечить ввод объектов PermanentEmployee и HourlyEmployee с клавиатуры;
 	PermanentEmployee pe;

@@ -83,6 +83,11 @@ public:
 		os << age;
 		return os;
 	}
+	virtual ifstream& scan(ifstream& is)
+	{
+		is >> last_name >> first_name >> age;
+		return is;
+	}
 };
 ostream& operator<<(ostream& os, const Human& obj)
 {
@@ -91,6 +96,10 @@ ostream& operator<<(ostream& os, const Human& obj)
 ofstream& operator<<(ofstream& os, const Human& obj)
 {
 	return obj.print(os);
+}
+ifstream& operator>>(ifstream& is, Human& obj)
+{
+	return obj.scan(is);
 }
 
 #define EMPLOYEE_TAKE_PARAMETERS	const std::string& position
@@ -132,6 +141,12 @@ public:
 		os.width(10);
 		os << position;
 		return os;
+	}
+	ifstream& scan(ifstream& is)
+	{
+		Human::scan(is);
+		is >> position;
+		return is;
 	}
 };
 
@@ -177,7 +192,12 @@ public:
 		os << salary;
 		return os;
 	}
-
+	ifstream& scan(ifstream& is)
+	{
+		Employee::scan(is);
+		is >> salary;
+		return is;
+	}
 };
 
 #define HOURLY_EMPLOYEE_TAKE_PARAMETERS double rate, int hours
@@ -246,16 +266,31 @@ public:
 
 		return os;
 	}
-
+	ifstream& scan(ifstream& is)
+	{
+		Employee::scan(is);
+		is >> rate >> hours;
+		return is;
+	}
 };
+
+Employee* EmployeeFactory(const string& type)
+{
+	if (type.find("PermanentEmployee") != std::string::npos)return new PermanentEmployee("", "", 0, "", 0);
+	if (type.find("HourlyEmployee") != std::string::npos)return new HourlyEmployee("", "", 0, "", 0, 0);
+}
+
+//#define SAVE_TO_FILE
 
 void main()
 {
+	setlocale(LC_ALL, "");
+
+#ifdef SAVE_TO_FILE
 	std::string str = "Hello";
 	cout << str.c_str()[1] << endl;;
 	cout << typeid(str.c_str()).name() << endl;
 
-	setlocale(LC_ALL, "");
 	Employee* department[] =
 	{
 		new PermanentEmployee("Rosenberg", "Ken", 30, "Lawyer", 2000),
@@ -291,5 +326,56 @@ void main()
 	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)
 	{
 		delete department[i];
+}
+#endif // SAVE_TO_FILE
+
+
+	Employee** department = nullptr;
+	int n = 0;	//Размер массива
+
+	ifstream fin("file.txt");
+
+	if (fin.is_open())
+	{
+		//cout << fin.tellg() << endl;
+		//1) Определяем количество записей в файле, для того, чтобы выделить память под сотрудников
+		string employee_type;
+		for (; !fin.eof(); n++)
+		{
+			std::getline(fin, employee_type);
+		}
+		n--;
+		cout << n << endl;
+		//2) Выделяем память под массив:
+		department = new Employee*[n] {};
+		//3) Возвращаем курсор в начало файла:
+		cout << fin.tellg() << endl;
+		fin.clear();	//Очищаем поток
+		fin.seekg(0);	//Задаем расположение курсора
+		cout << fin.tellg() << endl;
+
+		//4) Загружаем данные из файла в массив:
+		for (int i = 0; i < n; i++)
+		{
+			getline(fin, employee_type, ':');
+			department[i] = EmployeeFactory(employee_type);
+			fin >> *department[i];
+		}
 	}
+	else
+	{
+		cerr << "Error: file not found" << endl;
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << *department[i] << endl;
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		delete department[i];
+	}
+	delete[] department;
+	fin.close();
 }

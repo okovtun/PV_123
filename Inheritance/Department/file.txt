@@ -1,3 +1,3 @@
-class PermanentEmployee: Rosenberg Ken       30  лет Lawyer 2000
-class PermanentEmployee: Diaz      Ricardo   50  лет Boss 50000
-class HourlyEmployee:    Vercetty  Tomas     30  лет Security  тариф:500, отработано:8, итого:4000
+class PermanentEmployee: Rosenberg Ken       30  Lawyer           2000
+class PermanentEmployee: Diaz      Ricardo   50  Boss            50000
+class HourlyEmployee:    Vercetty  Tomas     30  Security          500  8

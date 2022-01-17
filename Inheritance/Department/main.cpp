@@ -58,8 +58,12 @@ public:
 	virtual ostream& print(ostream& os)const
 	{
 		//return os << last_name << " " << first_name << " " << age << " лет";
-		os << left;
-		os.width(10);
+		os << left;		//Задает выравнивание выводимой информации в поле определенной ширины
+		os.width(10);	//Определяет ширину поля, в которое будет произведен вывод. 
+						//Ширина измеряется в знакопозициях.
+		//width - метод класса ios_base
+		//left - манипулятор (как endl), который задает выравнивание
+
 		os << last_name;
 		os.width(10);
 		os << first_name;
@@ -67,8 +71,24 @@ public:
 		os << age << " лет";
 		return os;
 	}
+	virtual ofstream& print(ofstream& os)const
+	{
+		//return os << last_name << " " << first_name << " " << age << " лет";
+		os << left;
+		os.width(10);
+		os << last_name;
+		os.width(10);
+		os << first_name;
+		os.width(3);
+		os << age;
+		return os;
+	}
 };
 ostream& operator<<(ostream& os, const Human& obj)
+{
+	return obj.print(os);
+}
+ofstream& operator<<(ofstream& os, const Human& obj)
 {
 	return obj.print(os);
 }
@@ -90,7 +110,7 @@ public:
 	}
 	virtual double get_salary()const = 0;
 
-	Employee(HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS):Human(HUMAN_GIVE_PARAMETERS)//Делегирование
+	Employee(HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS)//Делегирование
 	{
 		set_position(position);
 		cout << "EConstructor:\t" << this << endl;
@@ -103,7 +123,15 @@ public:
 	std::ostream& print(std::ostream& os)const
 	{
 		Human::print(os) << " ";	//Вызываем print() из класса Human
+		os.width(10);
 		return os << position;
+	}
+	std::ofstream& print(std::ofstream& os)const
+	{
+		Human::print(os) << " ";	//Вызываем print() из класса Human
+		os.width(10);
+		os << position;
+		return os;
 	}
 };
 
@@ -125,7 +153,7 @@ public:
 
 	PermanentEmployee
 	(
-		HUMAN_TAKE_PARAMETERS,	EMPLOYEE_TAKE_PARAMETERS, PERMANENT_EMPLOYEE_TAKE_PARAMETERS
+		HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS, PERMANENT_EMPLOYEE_TAKE_PARAMETERS
 	) :Employee(HUMAN_GIVE_PARAMETERS, EMPLOYEE_GIVE_PARAMETERS)
 	{
 		set_salary(salary);
@@ -141,6 +169,15 @@ public:
 		Employee::print(os) << " ";
 		return os << salary;
 	}
+	std::ofstream& print(std::ofstream& os)const
+	{
+		Employee::print(os) << " ";
+		os.width(10);
+		os << right;
+		os << salary;
+		return os;
+	}
+
 };
 
 #define HOURLY_EMPLOYEE_TAKE_PARAMETERS double rate, int hours
@@ -188,8 +225,28 @@ public:
 	std::ostream& print(std::ostream& os)const
 	{
 		Employee::print(os) << " ";
-		return os << " тариф:" << rate << ", отработано:" << hours << ", итого:" << get_salary();
+		os << "тариф:";
+		os.width(5);
+		os << right;
+		os << rate;
+		os << ", отработано:";
+		os.width(3);
+		os << hours << ", итого:" << get_salary();
+
+		return os;
 	}
+	std::ofstream& print(std::ofstream& os)const
+	{
+		Employee::print(os) << " ";
+		os.width(10);
+		os << right;
+		os << rate;
+		os.width(3);
+		os << hours;
+
+		return os;
+	}
+
 };
 
 void main()
@@ -225,7 +282,8 @@ void main()
 	{
 		fout.width(25);
 		fout << left;
-		fout << string(typeid(*department[i]).name()) + ":" << *department[i] << endl;
+		fout << string(typeid(*department[i]).name()) + ":";
+		fout << *department[i] << endl;
 	}
 	fout.close();
 	system("start notepad file.txt");

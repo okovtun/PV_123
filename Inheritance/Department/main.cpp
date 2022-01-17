@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<fstream>
 #include<string>
 using namespace std;
@@ -6,7 +6,7 @@ using std::cin;
 using std::cout;
 using std::endl;;
 
-#define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age	//Принимаемые переметры конструктора Human
+#define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age	//РџСЂРёРЅРёРјР°РµРјС‹Рµ РїРµСЂРµРјРµС‚СЂС‹ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° Human
 #define HUMAN_GIVE_PARAMETERS last_name, first_name, age
 
 class Human
@@ -57,23 +57,23 @@ public:
 	//				Methods:
 	virtual ostream& print(ostream& os)const
 	{
-		//return os << last_name << " " << first_name << " " << age << " лет";
-		os << left;		//Задает выравнивание выводимой информации в поле определенной ширины
-		os.width(10);	//Определяет ширину поля, в которое будет произведен вывод. 
-						//Ширина измеряется в знакопозициях.
-		//width - метод класса ios_base
-		//left - манипулятор (как endl), который задает выравнивание
+		//return os << last_name << " " << first_name << " " << age << " Р»РµС‚";
+		os << left;		//Р—Р°РґР°РµС‚ РІС‹СЂР°РІРЅРёРІР°РЅРёРµ РІС‹РІРѕРґРёРјРѕР№ РёРЅС„РѕСЂРјР°С†РёРё РІ РїРѕР»Рµ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ С€РёСЂРёРЅС‹
+		os.width(10);	//РћРїСЂРµРґРµР»СЏРµС‚ С€РёСЂРёРЅСѓ РїРѕР»СЏ, РІ РєРѕС‚РѕСЂРѕРµ Р±СѓРґРµС‚ РїСЂРѕРёР·РІРµРґРµРЅ РІС‹РІРѕРґ. 
+						//РЁРёСЂРёРЅР° РёР·РјРµСЂСЏРµС‚СЃСЏ РІ Р·РЅР°РєРѕРїРѕР·РёС†РёСЏС….
+		//width - РјРµС‚РѕРґ РєР»Р°СЃСЃР° ios_base
+		//left - РјР°РЅРёРїСѓР»СЏС‚РѕСЂ (РєР°Рє endl), РєРѕС‚РѕСЂС‹Р№ Р·Р°РґР°РµС‚ РІС‹СЂР°РІРЅРёРІР°РЅРёРµ
 
 		os << last_name;
 		os.width(10);
 		os << first_name;
 		os.width(3);
-		os << age << " лет";
+		os << age << " Р»РµС‚";
 		return os;
 	}
 	virtual ofstream& print(ofstream& os)const
 	{
-		//return os << last_name << " " << first_name << " " << age << " лет";
+		//return os << last_name << " " << first_name << " " << age << " Р»РµС‚";
 		os << left;
 		os.width(10);
 		os << last_name;
@@ -105,9 +105,9 @@ ifstream& operator>>(ifstream& is, Human& obj)
 #define EMPLOYEE_TAKE_PARAMETERS	const std::string& position
 #define EMPLOYEE_GIVE_PARAMETERS	position
 
-class Employee :public Human	//Наследование
+class Employee :public Human	//РќР°СЃР»РµРґРѕРІР°РЅРёРµ
 {
-	std::string position;	//Должность
+	std::string position;	//Р”РѕР»Р¶РЅРѕСЃС‚СЊ
 public:
 	const std::string& get_position()const
 	{
@@ -119,7 +119,7 @@ public:
 	}
 	virtual double get_salary()const = 0;
 
-	Employee(HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS)//Делегирование
+	Employee(HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS)//Р”РµР»РµРіРёСЂРѕРІР°РЅРёРµ
 	{
 		set_position(position);
 		cout << "EConstructor:\t" << this << endl;
@@ -131,13 +131,13 @@ public:
 
 	std::ostream& print(std::ostream& os)const
 	{
-		Human::print(os) << " ";	//Вызываем print() из класса Human
+		Human::print(os) << " ";	//Р’С‹Р·С‹РІР°РµРј print() РёР· РєР»Р°СЃСЃР° Human
 		os.width(10);
 		return os << position;
 	}
 	std::ofstream& print(std::ofstream& os)const
 	{
-		Human::print(os) << " ";	//Вызываем print() из класса Human
+		Human::print(os) << " ";	//Р’С‹Р·С‹РІР°РµРј print() РёР· РєР»Р°СЃСЃР° Human
 		os.width(10);
 		os << position;
 		return os;
@@ -155,7 +155,7 @@ public:
 
 class PermanentEmployee : public Employee
 {
-	double salary;	//Зарплата
+	double salary;	//Р—Р°СЂРїР»Р°С‚Р°
 public:
 	double get_salary()const
 	{
@@ -205,8 +205,8 @@ public:
 
 class HourlyEmployee :public Employee
 {
-	double rate;	//Тариф (ставка за 1 час)
-	int hours;		//Количество отработанных часов
+	double rate;	//РўР°СЂРёС„ (СЃС‚Р°РІРєР° Р·Р° 1 С‡Р°СЃ)
+	int hours;		//РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚СЂР°Р±РѕС‚Р°РЅРЅС‹С… С‡Р°СЃРѕРІ
 public:
 	double get_rate()const
 	{
@@ -245,13 +245,13 @@ public:
 	std::ostream& print(std::ostream& os)const
 	{
 		Employee::print(os) << " ";
-		os << "тариф:";
+		os << "С‚Р°СЂРёС„:";
 		os.width(5);
 		os << right;
 		os << rate;
-		os << ", отработано:";
+		os << ", РѕС‚СЂР°Р±РѕС‚Р°РЅРѕ:";
 		os.width(3);
-		os << hours << ", итого:" << get_salary();
+		os << hours << ", РёС‚РѕРіРѕ:" << get_salary();
 
 		return os;
 	}
@@ -298,9 +298,9 @@ void main()
 		new HourlyEmployee("Vercetty", "Tomas", 30, "Security", 500, 8)
 	};
 
-	double total_salary = 0;	//Общая зарплата
-	//sizeof(department) / sizeof(Employee*) - Делим размер массива в Байтах на размер одного указателя,
-	//и таким образом получаем размер массива в элементах.
+	double total_salary = 0;	//РћР±С‰Р°СЏ Р·Р°СЂРїР»Р°С‚Р°
+	//sizeof(department) / sizeof(Employee*) - Р”РµР»РёРј СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° РІ Р‘Р°Р№С‚Р°С… РЅР° СЂР°Р·РјРµСЂ РѕРґРЅРѕРіРѕ СѓРєР°Р·Р°С‚РµР»СЏ,
+	//Рё С‚Р°РєРёРј РѕР±СЂР°Р·РѕРј РїРѕР»СѓС‡Р°РµРј СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° РІ СЌР»РµРјРµРЅС‚Р°С….
 	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)
 	{
 		cout << "\n--------------------------------------\n";
@@ -309,7 +309,7 @@ void main()
 		total_salary += department[i]->get_salary();
 	}
 	cout << "\n--------------------------------------\n";
-	cout << "Общая зарплата всего отдела: " << total_salary << endl;
+	cout << "РћР±С‰Р°СЏ Р·Р°СЂРїР»Р°С‚Р° РІСЃРµРіРѕ РѕС‚РґРµР»Р°: " << total_salary << endl;
 	cout << "\n--------------------------------------\n";
 
 	ofstream fout("file.txt");
@@ -331,14 +331,14 @@ void main()
 
 
 	Employee** department = nullptr;
-	int n = 0;	//Размер массива
+	int n = 0;	//Р Р°Р·РјРµСЂ РјР°СЃСЃРёРІР°
 
 	ifstream fin("file.txt");
 
 	if (fin.is_open())
 	{
 		//cout << fin.tellg() << endl;
-		//1) Определяем количество записей в файле, для того, чтобы выделить память под сотрудников
+		//1) РћРїСЂРµРґРµР»СЏРµРј РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїРёСЃРµР№ РІ С„Р°Р№Р»Рµ, РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РІС‹РґРµР»РёС‚СЊ РїР°РјСЏС‚СЊ РїРѕРґ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ
 		string employee_type;
 		for (; !fin.eof(); n++)
 		{
@@ -346,15 +346,15 @@ void main()
 		}
 		n--;
 		cout << n << endl;
-		//2) Выделяем память под массив:
+		//2) Р’С‹РґРµР»СЏРµРј РїР°РјСЏС‚СЊ РїРѕРґ РјР°СЃСЃРёРІ:
 		department = new Employee*[n] {};
-		//3) Возвращаем курсор в начало файла:
+		//3) Р’РѕР·РІСЂР°С‰Р°РµРј РєСѓСЂСЃРѕСЂ РІ РЅР°С‡Р°Р»Рѕ С„Р°Р№Р»Р°:
 		cout << fin.tellg() << endl;
-		fin.clear();	//Очищаем поток
-		fin.seekg(0);	//Задаем расположение курсора
+		fin.clear();	//РћС‡РёС‰Р°РµРј РїРѕС‚РѕРє
+		fin.seekg(0);	//Р—Р°РґР°РµРј СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ РєСѓСЂСЃРѕСЂР°
 		cout << fin.tellg() << endl;
 
-		//4) Загружаем данные из файла в массив:
+		//4) Р—Р°РіСЂСѓР¶Р°РµРј РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р° РІ РјР°СЃСЃРёРІ:
 		for (int i = 0; i < n; i++)
 		{
 			getline(fin, employee_type, ':');

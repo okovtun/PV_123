@@ -1,0 +1,5 @@
+Student: Harry Potter 19 wizard    Griffindor 100       100 
+
+Teacher: Minerva Macgonaggal 39 wizard  20 1000008 
+
+Employee: Argus Filtch 69 caretaker32 900

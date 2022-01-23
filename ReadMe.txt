@@ -15,6 +15,10 @@ https://app.creately.com/diagram/start/dashboard
 https://www.youtube.com/watch?v=UluSI1P4Ijg&list=PLBOPkQsFLCR2H7_0Ss0W6y703J_ySRGi_
 
 TODO:
+В иерархию транспортных средств добавить Катер, Яхту, Самолет и вертолет,
+и построить диаграмму классов;
+
+DONE:
 1. Почитать про *.csv-файлы;
 2. В проекте Academy сохранить группу в файл;
 3. В проекте Academy загрузить группу из файла;

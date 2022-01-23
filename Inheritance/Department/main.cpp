@@ -117,7 +117,7 @@ public:
 	{
 		this->position = position;
 	}
-	virtual double get_salary()const = 0;
+	virtual double get_salary() const = 0;
 
 	Employee(HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS) :Human(HUMAN_GIVE_PARAMETERS)//Делегирование
 	{

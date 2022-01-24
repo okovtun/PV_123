@@ -7,7 +7,7 @@ using std::endl;
 
 #define tab "\t"
 
-class Point
+union Point
 {
 	double x;
 	double y;
@@ -223,6 +223,8 @@ A.set_y(3);*/
 	////A += B;
 
 	Point(123, 234).print();
+	Point A(2, 3);
+	cout << sizeof(A) << endl;
 }
 
 /*

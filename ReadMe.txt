@@ -15,10 +15,22 @@ https://app.creately.com/diagram/start/dashboard
 https://www.youtube.com/watch?v=UluSI1P4Ijg&list=PLBOPkQsFLCR2H7_0Ss0W6y703J_ySRGi_
 
 TODO:
-Разработать иерархию геометрических фигур: Квадрат, прямоугольник, круг, треугольник.
+Разработать иерархию геометрических фигур: 
+	Квадрат - DONE 
+	прямоугольник - Rectangle()	https://docs.microsoft.com/en-us/windows/win32/gdi/about-rectangles
+	круг - Ellipce()			https://docs.microsoft.com/en-us/windows/win32/gdi/about-ellipses
+	треугольник - Polygon().	https://docs.microsoft.com/en-us/windows/win32/gdi/about-ellipses
+
+https://docs.microsoft.com/en-us/windows/win32/gdi/windows-gdi
+https://docs.microsoft.com/en-us/windows/win32/gdi/filled-shapes
+https://docs.microsoft.com/en-us/windows/win32/gdi/about-filled-shapes
+
 Для каждой фигуры вывести ее особые свойства (первичные параметры), такие как 
 длина стороны, радиус и т.д. (у каждой фигуры они свои) и вторичные параметры: площадь, периметр.
 Так же каждую фигуру нужно нарисовать.
+
+http://www.winprog.org/tutorial/
+https://www.youtube.com/watch?v=kQ2TTgfvR94&list=PL0_nf9F9pvZNQsdlmE6s0UyixTnT4778Y
 
 DONE:
 В иерархию транспортных средств добавить Катер, Яхту, Самолет и вертолет,

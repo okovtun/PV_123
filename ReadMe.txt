@@ -1,6 +1,9 @@
 ﻿https://github.com/okovtun/PV_123
 https://www.youtube.com/watch?v=AL5ArbG1fy8&list=PLeqyOOqxeiINhkggE6tzeBd_wUr9XEaBJ
 
+Венгерская нотация:
+https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%BE%D1%82%D0%B0%D1%86%D0%B8%D1%8F
+
 Book:
 https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sharing
 
@@ -15,6 +18,13 @@ https://app.creately.com/diagram/start/dashboard
 https://www.youtube.com/watch?v=UluSI1P4Ijg&list=PLBOPkQsFLCR2H7_0Ss0W6y703J_ySRGi_
 
 TODO:
+В нашу иерархию фигур добавить иерархтю треугольников:
+	EquilateralTriangle - Равносторонний треугольник;
+	IsoscalesTriangle	- Равнобедренный треугольник;
+	RightTriangle		- Прямоугольный треугольник;
+
+
+DONE:
 Разработать иерархию геометрических фигур: 
 	Квадрат - DONE 
 	прямоугольник - Rectangle()	https://docs.microsoft.com/en-us/windows/win32/gdi/about-rectangles

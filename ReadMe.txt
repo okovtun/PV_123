@@ -7,6 +7,18 @@ https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D
 Book:
 https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sharing
 
+//////////////////////////////////////////////////////////////////////////////////
+////////////////				  DATA CONTAINERS				//////////////////
+//////////////////////////////////////////////////////////////////////////////////
+
+TODO:
+В класс ForwardList добавить методы:
+void push_back(int Data);	//добавляет значение в конец списка
+void pop_front();			//удаляет значение с начала списка
+void pop_back();			//удаляет значение с конца списка
+void insert(int index, int value);	//вставляет значение в список по заданному индексу
+void erase(int index);		//удаляет значение из списка по заданному индексу
+
 UML:
 https://www.visual-paradigm.com/download/community.jsp
 https://app.creately.com/diagram/start/dashboard

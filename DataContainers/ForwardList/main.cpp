@@ -153,8 +153,9 @@ public:
 };
 
 //#define BASE_CHECK
-//#define DESTRUCTOR_CHECK
-#define HOME_WORK_1
+#define DESTRUCTOR_CHECK
+//#define HOME_WORK_1
+//#define HOME_WORK_2
 
 void main()
 {
@@ -208,7 +209,7 @@ void main()
 	ForwardList list;
 	for (int i = 0; i < n; i++)
 	{
-		list.push_front(rand());
+		list.push_front(rand()%100);
 	}
 	//cout << "Список заполнен" << endl;
 	list.print();
@@ -228,5 +229,10 @@ void main()
 	}
 	cout << endl;
 #endif // HOME_WORK_1
+
+#ifdef HOME_WORK_2
+	ForwardList list = { 3,5,8,13,21 };
+	list.print();
+#endif // HOME_WORK_2
 
 }

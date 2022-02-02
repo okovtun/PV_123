@@ -12,17 +12,21 @@ https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sha
 //////////////////////////////////////////////////////////////////////////////////
 
 TODO:
+1. 
+
+DONE:
 В класс ForwardList добавить методы:
 void push_back(int Data);	//добавляет значение в конец списка	DONE
 void pop_front();			//удаляет значение с начала списка	DONE
 void pop_back();			//удаляет значение с конца списка	DONE
 void insert(int index, int value);	//вставляет значение в список по заданному индексу	DONE
 
-void erase(int index);		//удаляет значение из списка по заданному индексу
+void erase(int index);		//удаляет значение из списка по заданному индексу	DONE
 
-Деструктор должен очищать список перед удалением (удалять все элементы из списка).
+Деструктор должен очищать список перед удалением (удалять все элементы из списка).	DONE
 CopyMethods;
 MoveMethods;
+Перегрузить оператор +, который выполняет конкатенацию двух списков.
 
 UML:
 https://www.visual-paradigm.com/download/community.jsp

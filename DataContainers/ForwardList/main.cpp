@@ -21,7 +21,6 @@ public:
 #ifdef DEBUG
 		cout << "EConstrcutor:\t" << this << endl;
 #endif // DEBUG
-
 	}
 	~Element()
 	{
@@ -29,7 +28,6 @@ public:
 #ifdef DEBUG
 		cout << "EDestrcutor:\t" << this << endl;
 #endif // DEBUG
-
 	}
 	friend class ForwardList;
 };
@@ -47,11 +45,35 @@ public:
 		size = 0;
 		cout << "LConstructor:\t" << this << endl;
 	}
+	ForwardList(unsigned int size):ForwardList()
+	{
+		//this->Head = nullptr;
+		//this->size = 0;
+		for (int i = 0; i < size; i++)
+		{
+			push_front(0);
+		}
+	}
 	~ForwardList()
 	{
 		while (Head)pop_front();
 		cout << "LDestructor:\t" << this << endl;
 	}
+
+	//					Operators:
+	const int& operator[](int index)const
+	{
+		Element* Temp = Head;
+		for (int i = 0; i < index; i++)Temp = Temp->pNext;
+		return Temp->Data;
+	}
+	int& operator[](int index)
+	{
+		Element* Temp = Head;
+		for (int i = 0; i < index; i++)Temp = Temp->pNext;
+		return Temp->Data;
+	}
+
 
 	//					Addigng elements:
 	void push_front(int Data)
@@ -153,8 +175,8 @@ public:
 };
 
 //#define BASE_CHECK
-#define DESTRUCTOR_CHECK
-//#define HOME_WORK_1
+//#define DESTRUCTOR_CHECK
+#define HOME_WORK_1
 //#define HOME_WORK_2
 
 void main()
@@ -215,13 +237,17 @@ void main()
 	list.print();
 #endif // DESTRUCTOR_CHECK
 
+	/*const int a = 250;
+	a = 270;*/
 #ifdef HOME_WORK_1
 	int n;
 	cout << "Введите размер списка: "; cin >> n;
 	ForwardList list(n);
 	for (int i = 0; i < n; i++)
 	{
+		//l-value = r-value;
 		list[i] = rand() % 100;
+		//			(int)
 	}
 	for (int i = 0; i < n; i++)
 	{

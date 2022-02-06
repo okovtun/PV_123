@@ -39,6 +39,10 @@ class ForwardList//Односвязный (однонаправленный) с�
 	Element* Head;	//Голова списка - указывает на начальный элемент списка.
 	unsigned int size;//Размер списка
 public:
+	unsigned int get_size()const
+	{
+		return this->size;
+	}
 	ForwardList()
 	{
 		Head = nullptr;//Если голова указывает на 0, то список пуст.
@@ -52,6 +56,23 @@ public:
 		for (int i = 0; i < size; i++)
 		{
 			push_front(0);
+		}
+	}
+	ForwardList(const initializer_list<int>& il) :ForwardList()
+	{
+		//il.begin() - возвращает итератор на начало контейнера
+		//il.end()  - возвращает итератор на конец контейнера
+		cout << typeid(il.begin()).name() << endl;
+		//const int* - константный указатель (НЕ изменяется адрес)
+		//int const* - указатель на константу (НЕ изменяется значение по адресу)
+		/*for (int const* it = il.begin(); it != il.end(); it++)
+		{
+			//it - iterator
+			push_back(*it);
+		}*/
+		for (int const* it = il.end() - 1; it != il.begin() - 1; it--)
+		{
+			push_front(*it);
 		}
 	}
 	~ForwardList()
@@ -176,8 +197,17 @@ public:
 
 //#define BASE_CHECK
 //#define DESTRUCTOR_CHECK
-#define HOME_WORK_1
-//#define HOME_WORK_2
+//#define HOME_WORK_1
+#define HOME_WORK_2
+
+void print_list(const ForwardList& list)
+{
+	for (int i = 0; i < list.get_size(); i++)
+	{
+		cout << list[i] << tab;
+	}
+	cout << endl;
+}
 
 void main()
 {
@@ -249,15 +279,13 @@ void main()
 		list[i] = rand() % 100;
 		//			(int)
 	}
-	for (int i = 0; i < n; i++)
-	{
-		cout << list[i] << tab;
-	}
-	cout << endl;
+	print_list(list);
 #endif // HOME_WORK_1
 
 #ifdef HOME_WORK_2
+	//		 l-value = r-value
 	ForwardList list = { 3,5,8,13,21 };
+	//(ForwardList)  = (initializer_list)
 	list.print();
 #endif // HOME_WORK_2
 

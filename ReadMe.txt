@@ -12,8 +12,8 @@ https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sha
 //////////////////////////////////////////////////////////////////////////////////
 
 TODO:
-1. Оптимизировать код в методах push_back() и insert();
-2. Оптимизировать код метода print();
+1. Оптимизировать код в методах push_back() и insert();	DONE
+2. Оптимизировать код метода print();			DONE
 3. Выражение Temp = Temp->pNext заменить выражением Temp++; Hardcore!
 
 DONE:

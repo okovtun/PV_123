@@ -1,291 +1,457 @@
-﻿//ForwardList
-#include<iostream>
-using namespace std;
+﻿#include <iostream>
 
 #define tab "\t"
-#define DEBUG
+// #define DEBUG
+
+template <class T>
+class ForwardList;
+
+template <class T>
 class Element
 {
-	int Data;	//Çíà÷åíèå ýëåìåíòà
-	Element* pNext;//Àäðåñ ñëåäóþùåãî ýëåìåíòà
-	static int count;
-public:
-	Element(int Data, Element* pNext = nullptr) :Data(Data), pNext(pNext)
-	{
-		count++;
-#ifdef DEBUG
-		cout << "EConstrcutor:\t" << this << endl;
-#endif // DEBUG
+	T data_;
+	Element *pNext;
 
+public:
+	Element(T data = T{}, Element *pNext = nullptr) : data_(data), pNext(pNext)
+	{
+#ifdef DEBUG
+		std::cout << "EConstrcutor:\t" << this << std::endl;
+#endif
 	}
 	~Element()
 	{
-		count--;
 #ifdef DEBUG
-		cout << "EDestrcutor:\t" << this << endl;
-#endif // DEBUG
-
+		std::cout << "EDestrcutor:\t" << this << std::endl;
+#endif
 	}
-	friend class ForwardList;
+
+	Element const *const &next() const
+	{
+		return pNext;
+	}
+
+	Element *&next()
+	{
+		return pNext;
+	}
+
+	T const &data() const
+	{
+		return data_;
+	}
+
+	T &data()
+	{
+		return data_;
+	}
+
+	friend class ForwardList<T>;
 };
 
-int Element::count = 0;
-
-class ForwardList//Îäíîñâÿçíûé (îäíîíàïðàâëåííûé) ñïèñîê
+template <class T>
+class ForwardList
 {
-	Element* Head;	//Ãîëîâà ñïèñêà - óêàçûâàåò íà íà÷àëüíûé ýëåìåíò ñïèñêà.
-	unsigned int size;//Ðàçìåð ñïèñêà
+	using _node = Element<T>;
+
+	_node *head_;
+	size_t size_;
+
+	template <class _FLNodeType, class _FLNodePtr, class _FLNodeRef>
+	class iterator_impl
+	{
+		_FLNodePtr ptr_;
+
+	public:
+		using _Self = ForwardList::iterator_impl<_FLNodeType, _FLNodePtr, _FLNodeRef>;
+
+		using difference_type = std::ptrdiff_t; // auto size pointer
+		using iterator_category = std::forward_iterator_tag;
+
+		iterator_impl() : ptr_(nullptr) {}
+		iterator_impl(_FLNodePtr p) : ptr_(p) {}
+		iterator_impl(const _Self &) = default;
+		iterator_impl(_Self &&) = default;
+		_Self &operator=(_Self &&) = default;
+		_Self &operator=(const _Self &) = default;
+
+		_Self &operator++()
+		{
+			ptr_ = ptr_->next();
+			return *this;
+		}
+
+		_Self operator++(int)
+		{
+			_Self temp(*this);
+			ptr_ = ptr_->next();
+			return temp;
+		}
+
+		decltype(ptr_->data()) operator*()
+		{
+			return ptr_->data();
+		}
+
+		decltype(&(ptr_->data())) operator->()
+		{
+			return &(ptr_->data());
+		}
+
+		bool operator!=(const _Self &it) const
+		{
+			return ptr_ != it.ptr_;
+		}
+
+		bool operator==(const _Self &it) const
+		{
+			return ptr_ == it.ptr_;
+		}
+	};
+
+	template <class It>
+	_node *advance(_node *iter, size_t distance)
+	{
+		if (distance > size_)
+			throw "Forward list out of bounds";
+
+		for (size_t i = 0; i < distance; ++i)
+		{
+			iter = iter->pNext;
+		}
+		return iter;
+	}
+
 public:
-	ForwardList()
+	using iterator = ForwardList::iterator_impl<_node, _node *, _node &>;
+	using const_iterator = ForwardList::iterator_impl<const _node, const _node *, const _node &>;
+
+	ForwardList() noexcept : head_(nullptr), size_(0)
 	{
-		Head = nullptr;//Åñëè ãîëîâà óêàçûâàåò íà 0, òî ñïèñîê ïóñò.
-		size = 0;
-		cout << "LConstructor:\t" << this << endl;
+#ifdef DEBUG
+		std::cout << "LConstructor:\t" << this << std::endl;
+#endif
 	}
-	ForwardList(unsigned int size) :ForwardList()
+
+	ForwardList(size_t size) : ForwardList()
 	{
-		/*this->Head = nullptr;
-		this->size = 0;*/
-		for (int i = 0; i < size; i++)
+		while (size_ != size)
 		{
-			push_front(0);
+			this->push_front(T());
 		}
 	}
-	ForwardList(const initializer_list<int>& il) : ForwardList()
+
+	ForwardList(std::initializer_list<T> il) : ForwardList()
 	{
-		cout << typeid(il.begin()).name() << endl;
-		/*	for (int const* it = il.begin(); it != il.end(); it++)
-			{
-				push_back(*it);
-			}*/
-		for (int const* it = il.end() - 1; it != il.begin() - 1; it--)
+		for (T val : il)
 		{
-			push_front(*it);
+			this->push_front(val);
 		}
 	}
+
 	~ForwardList()
 	{
-		while (Head)pop_front();
-		cout << "LDestructor:\t" << this << endl;
+		while (head_)
+		{
+			this->pop_front();
+		}
+#ifdef DEBUG
+		std::cout << "LDestructor:\t" << this << std::endl;
+#endif
 	}
-	//                      Operators:
 
-	int& operator[](const int index)
+	ForwardList(ForwardList<T> const &other) : ForwardList()
 	{
-		Element* Temp = Head;
-		for (int i = 0; i < index; i++)
-			Temp = Temp->pNext;
-		return Temp->Data;
+		for (T i : other)
+			this->push_front(i);
+		this->reverse();
 	}
-	const int& operator[](const int index)const
+
+	ForwardList(ForwardList<T> &&other)
 	{
-		Element* Temp = Head;
-		for (int i = 0; i < index; i++)
-			Temp = Temp->pNext;
-		return Temp->Data;
+		_node *tmp = this->head_;
+
+		this->head_ = other.head_;
+		this->size_ = other.size_;
+
+		other.head_ = tmp;
 	}
 
-	//					Addigng elements:
-	void push_front(int Data)
+	ForwardList<T> &operator=(const ForwardList<T> &other)
 	{
-		//initializer_list<Element*>{ new Element(Data), New->pNext = Head, Head = New};
-
-		//Element* New = new Element(Data);//Ñîçäàåì íîâûé ýëåìåíò è ïîìåùàåì â íåãî çíà÷åíèå Data
-		//New->pNext = Head;	//Ïðèâÿçûâåì íîâûé ýëåìåíò ê íà÷àëó ñïèñêà
-		//Head = New;	//Ïåðåâîäèì Ãîëîâó íà íîâûé ýëåìåíò
-		Head = new Element(Data, Head);
-		size++;
+		if (this == &other)
+			return *this;
+		ForwardList<T> to_delete = std::move(*this);
+		new (this) ForwardList(other);
+		return *this;
 	}
-	void push_back(int Data)
+
+	ForwardList<T> &operator=(ForwardList<T> &&other)
 	{
-		////0) Ïðîâåðÿåì, ÿâëÿåòñÿ ëè ñïèñîê ïóñòûì:
-		//if (Head == nullptr)return push_front(Data);
-		////1) Ñîçäàåì íîâûé ýëåìåíò:
-		//Element* New = new Element(Data);
-		////2) Äîõîäèì äî êîíöà ñïèñêà:
-		//Element* Temp = Head;
-		//while (Temp->pNext)//Ïîêà, pNext òåêóùåãî ýëåìåíòà ÍÅ íîëü
-		//	Temp = Temp->pNext;//ïåðåõîäèì íà ñëåäóþùèé ýëåìåíò
-		////Òåïåðü ìû íàõîäèìñÿ â ïîñëåäíåì ýëåìåíòå, ò.å. Temp->pNext == nullptr
-		////3) Ïðèñîåäèíÿåì íîâûé ýëåìåíò ê ïîñëåäíåìó:
-		//Temp->pNext = New;
+		if (this == &other)
+			return *this;
 
+		_node *tmp = this->head_;
 
-		/*if (Head == nullptr)return push_front(Data);
-		Head = new Element(Data, Head);
-		size++;*/
-		if (Head == nullptr)return push_front(Data);
-		Element* Temp = Head;
-		while (Temp->pNext)
-			Temp = Temp->pNext;
-		Temp->pNext = new Element(Data);
-		size++;
+		this->head_ = other.head_;
+		this->size_ = other.size_;
+
+		other.head_ = tmp;
+		return *this;
 	}
-	void insert(int index, int Data)
+
+	inline void push_front(T data)
 	{
-		//if (index == 0 || Head == nullptr)return push_front(Data);
-		//if (index > size)return;
-		//Element* New = new Element(Data);
-		////1) Äîõîäèì äî íóæíîãî ýëåìåíòà:
-		//Element* Temp = Head;
-		//for (int i = 0; i < index - 1; i++)Temp = Temp->pNext;
-		////3) Âêëþ÷àåì íîâûé ýëåìåíò â ñïèñîê:
-		//New->pNext = Temp->pNext;
-		//Temp->pNext = New;
-		//size++;
+		head_ = new Element<T>(data, head_);
 
-		/*if (index == 0 || Head == nullptr)return push_front(Data);
-		if (index > size)return;
-		Head = new Element(Data,Head);
-		for (int i = 0; i < index - 1; i++)Head = Head;
-		size++;*/
-
-		if (index == 0 || Head == nullptr)return push_front(Data);
-		if (index > size)return;
-		Element* Temp = Head;
-		for (int i = 0; i < index - 1; i++)Temp = Temp->pNext;
-		Temp->pNext = new Element(Data, Temp->pNext);
-		size++;
-
+		++this->size_;
 	}
 
-	//					Removing elements:
-	void pop_front()
+	void push_back(T data)
 	{
-		if (Head == nullptr)return;
-		//1) Çàïîìèíàåì àäðåñ óäàâëÿåìîãî ýëåìåíòà:
-		Element* Erased = Head;
-		//2) Èñêëþ÷àåì óäàëÿåìûé ýëåìåíò èç ñïèñêà:
-		Head = Erased->pNext;
-		//3) Óäàëÿåì ýëåìåí èç ïàìÿòè:
-		delete Erased;
-
-		size--;
+		if (head_ == nullptr)
+			return this->push_front(data);
+		_node *iter = ForwardList::advance(head_, size_ - 1);
+		iter->pNext = new Element(data);
+		++this->size_;
 	}
+
+	inline void pop_front()
+	{
+		if (head_ == nullptr)
+			return;
+
+		_node *temp = head_;
+		head_ = head_->pNext;
+		delete temp;
+
+		--this->size_;
+	}
+
 	void pop_back()
 	{
-		if (Head == nullptr)return;
-		if (Head->pNext == nullptr)return pop_front();
-		//1) Äîõîäèì äî ïðåäïîñëåäíåãî ýëåìåíòà:
-		Element* Temp = Head;
-		while (Temp->pNext->pNext)Temp = Temp->pNext;
-		//2) Óäàëÿåì ýëåìåíò èç ïàìÿòè:
-		delete Temp->pNext;
-		//3) Çàòèðàåì àäðåñ óäàëåííîãî ýëåìåíòà íóëåì:
-		Temp->pNext = nullptr;
-		size--;
+		if (head_ == nullptr)
+			return;
+		if (head_->pNext == nullptr)
+			return this->pop_front();
+		_node *iter = ForwardList::advance(head_, size_ - 2);
+		delete iter->pNext;
+		iter->pNext = nullptr;
+
+		--this->size_;
 	}
 
-	void erase(int index)
+	void insert(size_t index, T data)
 	{
-		if (index >= size)return;
-		if (index == 0)return pop_front();
-		Element* Temp = Head;
-		for (int i = 0; i < index - 1; ++i)
-			Temp = Temp->pNext;
-		Element* Erased = Temp->pNext;
-		//Temp->pNext = Temp->pNext->pNext;
-		Temp->pNext = Erased->pNext;
-		delete Erased;
-		size--;
+		if (index == 0 or head_ == nullptr)
+			return this->push_front(data);
+		_node *iter = ForwardList::advance(head_, index - 1);
+		_node *temp = iter->pNext;
+		iter->pNext = new Element(data, temp);
+		++this->size_;
 	}
-	//					Methods:
-	void print()const
+
+	void erase(size_t index)
 	{
-		int a = 2;
-		int* pa = &a;
-		Element* Temp = Head;	//Temp - ýòî èòåðàòîð.
-		//Èòåðàòîð - ýòî óêàçàòåëü, ïðè ïîìîùè êîòîðîãî ìîæíî ïîëó÷èòü äîñòóï 
-		//ê ýëåìåíòàì ñòðóêòóðû äàííûõ.
-		while (Temp)//Ïîêà Èòåðàòîð ñîäåðæèò íåíóëåâîé àäðåñ.
+		if (index == 0)
+			return this->pop_front();
+		_node *iter = ForwardList::advance(head_, index - 1);
+		if (iter->pNext == nullptr)
+			throw "No element at given index";
+		_node *temp = iter->pNext->pNext;
+		delete iter->pNext;
+		iter->pNext = temp;
+		--this->size_;
+	}
+
+	void unique() //как быстрее?
+	{
+		Element<T> *to_unique = this->head_;
+		Element<T> *to_find = nullptr;
+
+		for (size_t unique_idx = 0; to_unique; ++unique_idx, to_unique = to_unique->pNext)
 		{
-			cout << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-			Temp = Temp->pNext;	//ïåðåõîä íà ñëåäóþùèé ýëåìåíò
+			to_find = to_unique->pNext;
+
+			for (size_t idx_to_remove = unique_idx + 1; to_find; ++idx_to_remove)
+			{
+				if (to_unique->data_ == to_find->data_)
+				{
+					to_find = to_find->pNext;
+					this->erase(idx_to_remove);
+					--idx_to_remove;
+				}
+				else
+				{
+					to_find = to_find->pNext;
+				}
+			}
 		}
-		cout << "Êîëè÷åñòâî ýëåìåíòîâ ñïèñêà: " << size << endl;
-		cout << "Îáùåå êîëè÷åñòâî ýëåìåíòîâ : " << Head->count << endl;
+	}
+
+	void reverse()
+	{
+		_node *prev = nullptr;
+		_node *next = this->head_;
+		_node *temp = nullptr;
+		for (size_t idx = 0; idx < size_; ++idx)
+		{
+			temp = next->pNext;
+			next->pNext = prev;
+			prev = next;
+			next = temp;
+		}
+		this->head_ = prev;
+	}
+
+	T operator[](size_t index) const
+	{
+		return ForwardList::advance(head_, index)->data_;
+	}
+
+	T &operator[](size_t index)
+	{
+		return ForwardList::advance(head_, index)->data_;
+	}
+
+	bool is_empty() const { return !head_; }
+
+	void print() const
+	{
+		for (auto Temp = head_; Temp; Temp = Temp->pNext)
+		{
+			std::cout << Temp << tab << Temp->data_ << tab << Temp->pNext << std::endl;
+		}
+	}
+
+	ForwardList::const_iterator begin() const
+	{
+		return ForwardList::const_iterator(head_);
+	}
+
+	ForwardList::const_iterator end() const
+	{
+		return ForwardList::const_iterator();
+	}
+
+	ForwardList::iterator begin()
+	{
+		return ForwardList::iterator(head_);
+	}
+
+	ForwardList::iterator end()
+	{
+		return ForwardList::iterator();
 	}
 };
 
-#define BASE_CHECK
-//#define DESTRUCTOR_CHECK
-//#define HOME_WORK_1
-//#define HOME_WORK_2
+// #define BASE_CHECK
+// #define DESTRUCTOR_CHECK
+// #define HOME_WORK_1
+// #define HOME_WORK_2
+#define RANGE_BASE_FOR_LIST
 
-void main()
+ForwardList<int> func()
 {
-	setlocale(LC_ALL, "");
+	return ForwardList<int>({ 4, 3, 2, 1 });
+}
+
+int main()
+{
 #ifdef BASE_CHECK
 	int n;
-	cout << "Ââåäèòå ðàçìåð ñïèñêà: "; cin >> n;
-	ForwardList list;
+	std::cout << "Enter list size: ";
+	std::cin >> n;
+	ForwardList<int> list;
 	list.pop_front();
 	for (int i = 0; i < n; i++)
 	{
-		//list.push_front(rand() % 100);
+		// list.push_front(rand() % 100);
 		list.push_back(rand() % 100);
 	}
 	list.print();
-	//list.push_back(123);
-	//list.pop_front();
-	//list.pop_back();
+	// list.push_back(123);
+	// list.pop_front();
+	// list.pop_back();
 
 	int index;
 	int value;
-	cout << "Ââåäèòå èíäåêñ äîáàâëÿåìîãî ýëåìåíòà: "; cin >> index;
-	cout << "Ââåäèòå çíà÷åíèå äîáàâëÿåìîãî ýëåìåíòà: "; cin >> value;
+	std::cout << "Enter index INSERT element: ";
+	std::cin >> index;
+	std::cout << "Enter value INSERT element: ";
+	std::cin >> value;
 
 	list.insert(index, value);
 	list.print();
-	cout << "Ââåäèòå èíäåêñ óäàëÿåìîãî ýëåìåíòà: "; cin >> index;
+
+	std::cout << "Enter index ERASE element: ";
+	std::cin >> index;
 	list.erase(index);
 	list.print();
+
 #endif // BASE_CHECK
 
-	/*ForwardList list1;
-	list1.push_back(3);
-	list1.push_back(5);
-	list1.push_back(8);
-	list1.push_back(13);
-	list1.push_back(21);
-	list1.print();
-	ForwardList list2;
-	list2.push_back(34);
-	list2.push_back(55);
-	list2.push_back(89);
-	list2.print();*/
+	// ForwardList<int> list1;
+	// list1.push_back(3);
+	// list1.push_back(5);
+	// list1.push_back(8);
+	// list1.push_back(13);
+	// list1.push_back(21);
+	// list1.pop_back();
+	// list1.pop_front();
+	// list1.print();
 
 #ifdef DESTRUCTOR_CHECK
 	int n;
-	cout << "Ââåäèòå ðàçìåð ñïèñêà: ";
-	cin >> n;
-	ForwardList list;
-
+	std::cout << "Enter list size: ";
+	std::cin >> n;
+	ForwardList<int> list;
 	for (int i = 0; i < n; i++)
 	{
-		list.push_front(rand());
+		list.push_front(rand() % 100);
 	}
-	cout << "Ñïèñîê çàïîëíåí" << endl;
+	// std::cout << "Список заполнен" << std::endl;
+	list.print();
 #endif // DESTRUCTOR_CHECK
 
 #ifdef HOME_WORK_1
 	int n;
-	cout << "Ââåäèòå ðàçìåð ñïèñêà: ";
-	cin >> n;
-	ForwardList list(n);
+	std::cout << "Enter list size: ";
+	std::cin >> n;
+	ForwardList<int> list(n);
 	for (int i = 0; i < n; i++)
 	{
 		list[i] = rand() % 100;
 	}
 	for (int i = 0; i < n; i++)
 	{
-		cout << list[i] << tab;
+		std::cout << list[i] << tab;
 	}
-	cout << endl;
+	std::cout << std::endl;
 #endif // HOME_WORK_1
+
 #ifdef HOME_WORK_2
-	ForwardList list = { 3,5,8,13,21 };
+	ForwardList<int> list = { 3, 5, 8, 13, 3, 21, 5, 5, 6, 5, 13 };
+	list.unique();
+	list.reverse();
 	list.print();
 #endif // HOME_WORK_2
 
+#ifdef RANGE_BASE_FOR_LIST
+	ForwardList<int> list = { 3, 5, 8, 13, 21 }; // https://docs.microsoft.com/en-us/cpp/cpp/range-based-for-statement-cpp?view=msvc-160
+	for (int i : list)
+	{
+		std::cout << i << tab;
+	}
+	std::cout << std::endl;
+
+	ForwardList<int> l2{};
+	l2 = func();
+	l2 = list;
+	for (int i : l2)
+	{
+		std::cout << i << tab;
+	}
+	std::cout << std::endl;
+#endif // RANGE_BASE_FOR_LIST
 }

@@ -77,13 +77,7 @@ public:
 	{
 		return Temp->Data;
 	}
-	friend std::ostream& operator<<(std::ostream& os, const Iterator& obj);
 };
-
-std::ostream& operator<<(std::ostream& os, const Iterator& obj)
-{
-	return os << obj.Temp;
-}
 
 class ForwardList//Односвязный (однонаправленный) список
 {
@@ -97,6 +91,14 @@ public:
 	unsigned int get_size()const
 	{
 		return this->size;
+	}
+	Iterator begin()
+	{
+		return Head;
+	}
+	Iterator end()
+	{
+		return nullptr;
 	}
 	ForwardList()
 	{
@@ -387,11 +389,25 @@ void main()
 
 #ifdef RANGE_BASE_FOR_LIST
 	ForwardList list = { 3,5,8,13,21 };
+	for (Iterator it = list.begin(); it != list.end(); it++)
+	{
+		cout << *it << tab;
+	}
+	cout << endl;
 	for (int i : list)
 	{
 		cout << i << tab;
 	}
 	cout << endl;
+	//Range-based for
+	/*
+	------------------------------------------------------
+	for(value:container)
+	{
+		cout << value;
+	}
+	------------------------------------------------------
+	*/
 #endif // RANGE_BASE_FOR_LIST
 
 }

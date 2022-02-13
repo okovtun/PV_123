@@ -12,6 +12,9 @@ https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sha
 //////////////////////////////////////////////////////////////////////////////////
 
 TODO:
+Добить unique() и reverse();
+
+DONE:
 Проверочный код должен заработать: https://github.com/okovtun/PV_123/blob/2d536b048781e479ebd222d296871243b169e062/DataContainers/ForwardList/main.cpp#L388
 
 DONE:

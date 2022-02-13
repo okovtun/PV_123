@@ -12,6 +12,21 @@ https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sha
 //////////////////////////////////////////////////////////////////////////////////
 
 TODO:
+Добавить в список следующие методы:
+void push_back(int Data);
+void pop_front();
+void pop_back();
+void insert(int index, int Data);
+void erase(int index);
+
+Destructor;
+CopyMethods;
+MoveMethods;
+ILconstructor;
+List list = {3,5,8,13,21};
+for(int i: list) cout << i << tab; cout << endl;
+
+DONE:
 Проверочный код должен заработать: https://github.com/okovtun/PV_123/blob/2d536b048781e479ebd222d296871243b169e062/DataContainers/ForwardList/main.cpp#L388
 
 DONE:

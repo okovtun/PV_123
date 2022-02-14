@@ -12,12 +12,18 @@ https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sha
 //////////////////////////////////////////////////////////////////////////////////
 
 TODO:
+1. void erase(int index);
+2. Оптимизировать методы добавления элементов, так как мы это делали в односвязном списке;
+3. Проверочный код должен заработать:
+	List list = { 3, 5, 8, 13, 21 };
+	for(int i:list)cout << i << tab; cout << endl;
+
+DONE:
 Добавить в список следующие методы:
-void push_back(int Data);
-void pop_front();
-void pop_back();
-void insert(int index, int Data);
-void erase(int index);
+void push_back(int Data);			DONE
+void pop_front();					DONE
+void pop_back();					DONE
+void insert(int index, int Data);	DONE
 
 Destructor;
 CopyMethods;

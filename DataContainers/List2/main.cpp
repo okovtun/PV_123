@@ -194,11 +194,11 @@ public:
 			size++;
 			return;
 		}
-		Element* New = new Element(Data);
+		/*Element* New = new Element(Data);
 		New->pNext = Head;
 		Head->pPrev = New;
-		Head = New;
-		//Head = Head->pPrev = new Element(Data, Head);
+		Head = New;*/
+		Head = Head->pPrev = new Element(Data, Head);
 		size++;
 	}
 	void push_back(int Data)
@@ -209,10 +209,12 @@ public:
 			size++;
 			return;
 		}
-		Element* New = new Element(Data);//1)
+		/*Element* New = new Element(Data);//1)
 		New->pPrev = Tail;//2)
 		Tail->pNext = New;//3)
-		Tail = New;//4)
+		Tail = New;//4)*/
+
+		Tail = Tail->pNext = new Element(Data, nullptr, Tail);
 		size++;
 	}
 	void insert(int index, int Data)
@@ -233,11 +235,12 @@ public:
 		}
 		//Неважно, с какой стороны мы добрались до нужного элемента, 
 		//процедура добавления нового элемента быдет идентичной:
-		Element* New = new Element(Data);
+		/*Element* New = new Element(Data);
 		New->pNext = Temp;//1)
 		New->pPrev = Temp->pPrev;//2)
 		Temp->pPrev->pNext = New;//3)
-		Temp->pPrev = New;//4)
+		Temp->pPrev = New;//4)*/
+		Temp->pPrev = Temp->pPrev->pNext = new Element(Data, Temp, Temp->pPrev);
 		size++;
 	}
 
@@ -285,10 +288,12 @@ void print(int arr[]);
 
 //#define BASE_CHECK
 //#define RANGE_BASED_FOR_ARRAY
+#define RANGE_BASED_FOR_LIST
 
 void main()
 {
 	setlocale(LC_ALL, "");
+
 #ifdef BASE_CHECK
 	int n;
 	cout << "Введите размер списка: "; cin >> n;
@@ -337,6 +342,7 @@ void main()
 	cout << endl;*/
 #endif // RANGE_BASED_FOR_ARRAY
 
+#ifdef RANGE_BASED_FOR_LIST
 	List list = { 3,5,8,13,21 };
 	list.print();
 	for (int i : list)
@@ -349,4 +355,6 @@ void main()
 		cout << *it << tab;
 	}
 	cout << endl;
+#endif // RANGE_BASED_FOR_LIST
+
 }

@@ -7,15 +7,16 @@ using std::endl;
 
 #define tab "\t"
 
+template<typename T>
 class List
 {
 	class Element
 	{
-		int Data;		//Значение элемента
+		T Data;		//Значение элемента
 		Element* pNext;	//Адрес следующего элемента
 		Element* pPrev;	//Адрес предыдущего элемента
 	public:
-		Element(int Data, Element* pNext = nullptr, Element* pPrev = nullptr) :
+		Element(T Data, Element* pNext = nullptr, Element* pPrev = nullptr) :
 			Data(Data), pNext(pNext), pPrev(pPrev)
 		{
 			cout << "EConstructor:\t" << this << endl;
@@ -24,7 +25,7 @@ class List
 		{
 			cout << "EDestructor:\t" << this << endl;
 		}
-		friend class List;
+		friend class List<T>;
 	}*Head, *Tail;
 	size_t size;//size_t - unsigned int
 	/*Element* Head;

@@ -72,8 +72,8 @@ void main()
 	Tree tree;
 	for (int i = 0; i < n; i++)
 	{
-		tree.insert(rand() % 100);
+		tree.insert(rand() % 100, tree.getRoot());
 	}
-	tree.print();
+	tree.print(tree.getRoot());
 	cout << endl;
 }

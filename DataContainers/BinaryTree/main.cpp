@@ -35,6 +35,27 @@ public:
 		cout << "TDestructor:\t" << this << endl;
 	}
 
+	void insert(int Data)
+	{
+		insert(Data, Root);
+	}
+	int minValue()const
+	{
+		return minValue(Root);
+	}
+	int maxValue()const
+	{
+		return maxValue(Root);
+	}
+	int size()const
+	{
+		return size(Root);
+	}
+	void print()const
+	{
+		print(Root);
+	}
+private:
 	void insert(int Data, Element* Root)
 	{
 		if (this->Root == nullptr)
@@ -55,6 +76,24 @@ public:
 		}
 	}
 
+	int minValue(Element* Root)const
+	{
+		if (Root == nullptr)return 0;
+		/*if (Root->pLeft == nullptr)return Root->Data;
+		else return minValue(Root->pLeft);*/
+		//return Root->pLeft == nullptr ? Root->Data : minValue(Root->pLeft);
+		return Root->pLeft ? minValue(Root->pLeft) : Root->Data;
+	}
+	int maxValue(Element* Root)const
+	{
+		if (Root == nullptr)return 0;
+		return Root->pRight ? maxValue(Root->pRight) : Root->Data;
+	}
+	int size(Element* Root)const
+	{
+		return Root == nullptr ? 0 : size(Root->pLeft) + size(Root->pRight) + 1;
+	}
+
 	void print(Element* Root)const
 	{
 		if (Root == nullptr) return;
@@ -72,8 +111,11 @@ void main()
 	Tree tree;
 	for (int i = 0; i < n; i++)
 	{
-		tree.insert(rand() % 100, tree.getRoot());
+		tree.insert(rand() % 100);
 	}
-	tree.print(tree.getRoot());
+	tree.print();
 	cout << endl;
+	cout << "Минимальное значение в дереве: " << tree.minValue() << endl;
+	cout << "Максимальное значение в дереве: " << tree.maxValue() << endl;
+	cout << "Количество элементов дерева: " << tree.size() << endl;
 }

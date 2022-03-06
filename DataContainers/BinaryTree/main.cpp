@@ -19,6 +19,10 @@ protected:
 		{
 			cout << "EDestructor:\t" << this << endl;
 		}
+		bool is_leaf()const
+		{
+			return pLeft == pRight;
+		}
 		friend class Tree;
 		friend class UniqueTree;
 	}*Root;
@@ -53,6 +57,10 @@ public:
 	void insert(int Data)
 	{
 		insert(Data, Root);
+	}
+	void erase(int Data)
+	{
+		erase(Data, Root);
 	}
 	void clear()
 	{
@@ -102,6 +110,34 @@ private:
 		{
 			if (Root->pRight == nullptr)Root->pRight = new Element(Data);
 			else insert(Data, Root->pRight);
+		}
+	}
+	void erase(int Data, Element*& Root)
+	{
+		if (Root == nullptr)return;
+		erase(Data, Root->pLeft);
+		erase(Data, Root->pRight);
+		if (Data == Root->Data)
+		{
+			if (Root->is_leaf())
+			{
+				delete Root;
+				Root = nullptr;
+			}
+			else
+			{
+				if (size(Root->pLeft) > size(Root->pRight))
+				{
+					Root->Data = maxValue(Root->pLeft);
+					erase(maxValue(Root->pLeft), Root->pLeft);
+				}
+				else
+				{
+					int min_value = minValue(Root->pRight);
+					Root->Data = min_value;
+					erase(min_value, Root->pRight);
+				}
+			}
 		}
 	}
 	void clear(Element* Root)
@@ -203,8 +239,12 @@ void main()
 	cout << "Среднее арифметическое элементов дерева: " << tree.avg() << endl;
 #endif // BASE_CHECK
 
-	Tree tree = { 50, 25, 75, 16, 32, 64, 80 };
+	Tree tree = { 50, 25, 75, 16, 32, 64, 80, 27, 35 };
 	tree.print();
-	Tree tree2 = tree;
-	tree2.print();
+	/*Tree tree2 = tree;
+	tree2.print();*/
+	int value;
+	cout << "Введите удаляемое значение: "; cin >> value;
+	tree.erase(value);
+	tree.print();
 }

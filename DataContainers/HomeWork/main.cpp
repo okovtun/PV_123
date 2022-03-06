@@ -53,6 +53,10 @@ public:
 	{
 		insert(Data, Root);
 	}
+	void erase(int Data)
+	{
+		erase(Data, Root);
+	}
 	void clear()
 	{
 		clear(Root);
@@ -104,6 +108,20 @@ private:
 		{
 			if (Root->pRight == nullptr)Root->pRight = new Element(Data);
 			else insert(Data, Root->pRight);
+		}
+	}
+	void erase(int Data, Element* Root)
+	{
+		if (Root == nullptr)return;
+		erase(Data, Root->pLeft);
+		erase(Data, Root->pRight);
+		if (Data == Root->Data)
+		{
+			if (Root->is_leaf())
+			{
+				delete Root;
+				Root = nullptr;
+			}
 		}
 	}
 

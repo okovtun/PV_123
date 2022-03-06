@@ -1,0 +1,4 @@
+1. Sequence containers:		array, vector, deque, list, forward_list;
+2. Associative containers:	map, set, multimap, multiset;
+3. Adaptor containers:		stack, queue, priority_queue;
+4. Hash tables:	unordered_map, unordered_set, unordered_multimap, unordered_multiset;

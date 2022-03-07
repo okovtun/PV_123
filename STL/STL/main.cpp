@@ -2,6 +2,7 @@
 #include<iostream>
 #include<array>
 #include<vector>
+#include<deque>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -10,7 +11,8 @@ using std::endl;
 #define delimiter "\n-----------------------------------\n"
 
 //#define STL_ARRAY
-#define STL_VECTOR
+//#define STL_VECTOR
+#define STL_DEQUE
 
 void main()
 {
@@ -108,11 +110,48 @@ void main()
 		cout << *it << tab;
 	}
 	cout << endl;
+	for (std::vector<int>::reverse_iterator rit = vec.rbegin(); rit != vec.rend(); rit++)
+	{
+		cout << *rit << tab;
+	}
+	cout << endl;
 	cout << "Size:    " << vec.size() << endl;
 	cout << "MaxSize: " << vec.max_size() << endl;
 	cout << "Capacity:" << vec.capacity() << endl;
 	cout << delimiter << endl;
 
+	int index;
+	int value;
+	int count;
+	cout << "Введите индекс добавляемого элемента: "; cin >> index;
+	cout << "Введите значение добавляемого элемента: "; cin >> value;
+	cout << "Сколько раз добавить значение: "; cin >> count;
+	vec.insert(vec.begin() + index, count, value);
+	for (int i : vec)cout << i << tab; cout << endl;
+
+	vec.insert(vec.begin() + index, { 3,5,8,13,21 });
+	for (int i : vec)cout << i << tab; cout << endl;
+
 #endif // STL_VECTOR
 
+#ifdef STL_DEQUE
+	//deque (double ended queue - двунаправленная очередь) это контейнер, 
+	//который хранит данный в виде списка динамических массивов.
+	std::vector<int> vec;
+	std::deque<int> deque = { 3,5,8,13,21 };
+	vec.push_back(1);
+	deque.push_back(34);
+	deque.push_back(55);
+	deque.push_back(89);
+	for (int i = 0; i < deque.size(); i++)
+	{
+		cout << deque[i] << tab;
+	}
+	cout << endl;
+	deque.push_front(2);
+	deque.push_front(1);
+	deque.push_front(1);
+	deque.push_front(0);
+	for (int i : deque)cout << i << tab; cout << endl;
+#endif
 }

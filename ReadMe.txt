@@ -11,6 +11,8 @@ https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sha
 ////////////////			STANDARD TEMPLATE LIBRARY			//////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
+http://cplusplus.com/reference/stl/
+
 TODO:
 Выучить теорию!
 

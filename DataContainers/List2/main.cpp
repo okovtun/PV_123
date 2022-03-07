@@ -345,9 +345,14 @@ void main()
 #ifdef RANGE_BASED_FOR_LIST
 	List list = { 3,5,8,13,21 };
 	list.print();
-	for (int i : list)
+	/*for (int i : list)
 	{
 		cout << i << tab;
+	}
+	cout << endl;*/
+	for (List::Iterator it = list.begin(); it != list.end(); it++)
+	{
+		cout << *it << tab;
 	}
 	cout << endl;
 	for (List::ReverseIterator it = list.rbegin(); it; ++it)

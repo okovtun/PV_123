@@ -14,6 +14,7 @@ https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sha
 http://cplusplus.com/reference/stl/
 
 TODO:
+Сохранить базу в файл;
 Решить задачу №1:https://github.com/okovtun/PV_123/blob/master/STL/AssiciativeContainers/GAI%20DZ_PS_C%2B%2B_nedelya_09.pdf
 
 DONE:

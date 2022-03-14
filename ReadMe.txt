@@ -14,6 +14,12 @@ https://drive.google.com/drive/folders/1mIhAKMp5-Jpy6s5X8u924tRCXFEdHE_z?usp=sha
 http://cplusplus.com/reference/stl/
 
 TODO:
+1. Проверить чтение из файла с большим количеством правонарушений;
+2. Создать ветку PoliceLoadOptimisation, и в этой ветке упростить 
+   парсинг строки с правонарушениями используя функцию strtok();
+   https://www.cplusplus.com/reference/cstring/strtok/?kw=strtok
+
+DONE:
 Сохранить базу в файл;
 Решить задачу №1:https://github.com/okovtun/PV_123/blob/master/STL/AssiciativeContainers/GAI%20DZ_PS_C%2B%2B_nedelya_09.pdf
 

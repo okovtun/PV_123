@@ -1,16 +1,17 @@
-#pragma once
+п»ї#pragma once
 #include<iostream>
+#include<fstream>
 #include<string>
 #include<map>
 
 const std::map<size_t, std::string> crimes =
 {
-	{1, "проезд на красный"},
-	{2, "привышение скорости"},
-	{3, "езда по встречной полосе"},
-	{4, "дрифт на перекрестке"},
-	{5, "парковка в неположенном месте"},
-	{6, "оскорбление офицера"},
+	{1, "РїСЂРѕРµР·Рґ РЅР° РєСЂР°СЃРЅС‹Р№"},
+	{2, "РїСЂРёРІС‹С€РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё"},
+	{3, "РµР·РґР° РїРѕ РІСЃС‚СЂРµС‡РЅРѕР№ РїРѕР»РѕСЃРµ"},
+	{4, "РґСЂРёС„С‚ РЅР° РїРµСЂРµРєСЂРµСЃС‚РєРµ"},
+	{5, "РїР°СЂРєРѕРІРєР° РІ РЅРµРїРѕР»РѕР¶РµРЅРЅРѕРј РјРµСЃС‚Рµ"},
+	{6, "РѕСЃРєРѕСЂР±Р»РµРЅРёРµ РѕС„РёС†РµСЂР°"},
 };
 
 class Crime
@@ -26,7 +27,7 @@ public:
 	{
 		return place;
 	}
-	Crime(size_t id, const std::string& place):id(id), place(place){}
+	Crime(size_t id, const std::string& place) :id(id), place(place) {}
 	~Crime() {}
 };
 
@@ -35,4 +36,10 @@ std::ostream& operator<<(std::ostream& os, const Crime& obj)
 	return os << crimes.at(obj.get_id()) << ", " << obj.get_place();
 	//return os << crimes[obj.get_id()] << ", " << obj.get_place();
 	//out_of_range exception
+}
+
+std::ofstream& operator<<(std::ofstream& ofs, const Crime& obj)
+{
+	ofs << obj.get_id() << " " << obj.get_place();
+	return ofs;
 }

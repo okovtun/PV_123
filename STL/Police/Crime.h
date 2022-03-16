@@ -29,6 +29,16 @@ public:
 	}
 	Crime(size_t id, const std::string& place) :id(id), place(place) {}
 	~Crime() {}
+
+	bool operator==(const Crime& other)const
+	{
+		return this->id == other.id && this->place == other.place;
+	}
+	bool operator!=(const Crime& other)const
+	{
+		return this->id != other.id && this->place != other.place;
+	}
+
 };
 
 std::ostream& operator<<(std::ostream& os, const Crime& obj)

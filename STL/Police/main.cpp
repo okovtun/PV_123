@@ -109,10 +109,10 @@ void print(const std::map<std::string, std::list<Crime>>& base, const std::strin
 		std::cerr << "В базе нет такого номера" << endl;
 	}
 }
-void print(const std::map<std::string, std::list<Crime>>& base, const std::string& first_plate, const std::string& last_plate)
+void print(std::map<std::string, std::list<Crime>>& base, const std::string& first_plate, const std::string& last_plate)
 {
 	for (
-		std::map<std::string, std::list<Crime>>::const_iterator it = base.lower_bound(first_plate);
+		std::map<std::string, std::list<Crime>>::iterator it = base.lower_bound(first_plate);
 		it != base.upper_bound(last_plate);
 		++it
 		)

@@ -8,7 +8,7 @@ using std::cout;
 using std::endl;
 
 class Fraction;
-Fraction operator*(Fraction left, Fraction right);	//Объявляем функцию
+Fraction& operator*(Fraction left, Fraction right);	//Объявляем функцию
 
 class Fraction
 {
@@ -58,7 +58,7 @@ public:
 		this->denominator = 1;
 		cout << "1argConstructor:\t" << this << endl;
 	}
-	Fraction(double decimal)
+	explicit Fraction(double decimal)
 	{
 		decimal += 1e-11;
 		integer = decimal;
@@ -172,7 +172,7 @@ public:
 	}
 };
 
-Fraction operator*(Fraction left, Fraction right)
+Fraction& operator*(Fraction left, Fraction right)
 {
 	left.to_improper();	right.to_improper();
 	/*Fraction result
@@ -269,7 +269,7 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 }
 
 //#define CONSTRUCTORS_CHECK
-//#define OPERATORS_CHECK
+#define OPERATORS_CHECK
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERSIONS_FROM_OTHER_TO_CLASS
 //#define CONVERSIONS_FROM_CLASS_TO_OTHER
@@ -304,8 +304,8 @@ void main()
 
 	Fraction A(2, 1, 2);
 	Fraction B(3, 2, 5);
-	/*Fraction C = A * B;
-	C.print();*/
+	Fraction C = A * B;
+	C.print();
 
 	/*Fraction D(840, 3600);
 	D.reduce();
@@ -314,10 +314,10 @@ void main()
 	/*C = A / B;
 	C.print();*/
 
-	A *= B;
+	/*A *= B;
 	A.operator*=(B);
 	A.print();
-	A = A * B;
+	A = A * B;*/
 #endif // OPERATORS_CHECK
 
 #ifdef TYPE_CONVERSIONS_BASICS
@@ -382,7 +382,7 @@ void main()
 	cout << A << endl;
 	A.print();*/
 
-	Fraction A(2,3,4);
+	/*Fraction A(2,3,4);
 	cout << "Введите простую дробь: "; cin >> A;
-	cout << A << endl;
+	cout << A << endl;*/
 }

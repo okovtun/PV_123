@@ -7,7 +7,7 @@ using std::endl;
 
 #define tab "\t"
 
-#define DEBUG
+//#define DEBUG
 
 class Element
 {
@@ -131,6 +131,11 @@ public:
 		{
 			push_front(*it);
 		}
+	}
+	ForwardList(const ForwardList& other)
+	{
+		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
+			push_back(Temp->Data);
 	}
 	~ForwardList()
 	{
@@ -278,7 +283,7 @@ void print_list(const ForwardList& list)
 //#define HOME_WORK_1
 //#define HOME_WORK_2
 //#define RANGE_BASE_FOR_ARRAY
-#define RANGE_BASE_FOR_LIST
+//#define RANGE_BASE_FOR_LIST
 
 void main()
 {
@@ -410,4 +415,18 @@ void main()
 	*/
 #endif // RANGE_BASE_FOR_LIST
 
+	int n;
+	cout << "Введите размер списка: "; cin >> n;
+	ForwardList list(n);
+	cout << "Список на " << n << " элементов создан" << endl;
+	cout << "Заполняем его случайными числами:\n";
+	/*for (int i = 0; i < list.get_size(); i++)
+	{
+		list[i] = rand();
+	}*/
+	for (int& i : list)
+	{
+		i = rand();
+	}
+	cout << "Список заполнен" << endl;
 }

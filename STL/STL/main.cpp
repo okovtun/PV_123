@@ -3,6 +3,7 @@
 #include<array>
 #include<vector>
 #include<deque>
+#include<list>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -12,7 +13,7 @@ using std::endl;
 
 //#define STL_ARRAY
 //#define STL_VECTOR
-#define STL_DEQUE
+//#define STL_DEQUE
 
 void main()
 {
@@ -154,4 +155,11 @@ void main()
 	deque.push_front(0);
 	for (int i : deque)cout << i << tab; cout << endl;
 #endif
+
+	std::list<int> list = { 3,5,8,13,21 };
+	for (int i = 0; i < list.size(); i++)
+	{
+		cout << list[i] << "\t";
+	}
+	cout << endl;
 }

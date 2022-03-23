@@ -1,4 +1,4 @@
-//Threads
+п»ї//Threads
 #include<iostream>
 #include<thread>
 using namespace std;
@@ -26,21 +26,21 @@ void World()
 void main()
 {
 	setlocale(LC_ALL, "");
-	//Инициализация потоков при объявлении:
+	//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїРѕС‚РѕРєРѕРІ РїСЂРё РѕР±СЉСЏРІР»РµРЅРёРё:
 	/*std::thread hello_thread(Hello);	
 	std::thread world_thread(World);*/
 
-	//Объявление потоков:
+	//РћР±СЉСЏРІР»РµРЅРёРµ РїРѕС‚РѕРєРѕРІ:
 	std::thread hello_thread;
 	std::thread world_thread;
 
-	//Инициализация потоков после объявления:
+	//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїРѕС‚РѕРєРѕРІ РїРѕСЃР»Рµ РѕР±СЉСЏРІР»РµРЅРёСЏ:
 	hello_thread = std::thread(Hello);
 	world_thread = std::thread(World);
 
-	cin.get();	//Ожидает нажатие Enter
+	cin.get();	//РћР¶РёРґР°РµС‚ РЅР°Р¶Р°С‚РёРµ Enter
 	finish = true;
 
-	hello_thread.join();	//Синхронизирует потоки
+	hello_thread.join();	//РЎРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµС‚ РїРѕС‚РѕРєРё
 	world_thread.join();
 }

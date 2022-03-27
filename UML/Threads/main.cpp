@@ -33,6 +33,8 @@ void main()
 	//Объявление потоков:
 	std::thread hello_thread;
 	std::thread world_thread;
+	if (hello_thread.joinable())cout << "hello_thread joinable" << endl;
+	system("PAUSE");
 
 	//Инициализация потоков после объявления:
 	hello_thread = std::thread(Hello);

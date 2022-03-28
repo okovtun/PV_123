@@ -104,6 +104,15 @@ public:
 	{
 		return is_started;
 	}
+	void correct_consumption(int speed)
+	{
+		if (speed >= 1 && speed <= 60 || speed >= 101 && speed <= 140)
+			consumption_per_second = .002;
+		if (speed >= 61 && speed <= 100)consumption_per_second = .0014;
+		if (speed >= 141 && speed <= 200)consumption_per_second = .0025;
+		if (speed >= 201 && speed <= 250)consumption_per_second = 0.003;
+		if (speed == 0)consumption_per_second = .0003;
+	}
 	void info()const
 	{
 		cout << "Consumption per 100 km: " << consumption << " liters\n";
@@ -160,6 +169,11 @@ public:
 	}
 	void get_out()
 	{
+		if (speed > 0)
+		{
+			cout << "Выход из машины во время движения может навредить Вашему здоровью" << endl;
+			return;
+		}
 		driver_inside = false;
 		if (control.panel_thread.joinable())control.panel_thread.join();
 		system("CLS");
@@ -191,7 +205,7 @@ public:
 				if (driver_inside)get_out();
 				else get_in();
 				break;	//Вход/Выход из машины
-			case 'I':	
+			case 'I':
 			case 'i':	//ignition - зажигание
 				if (engine.started())stop_engine();
 				else start_engine();
@@ -230,6 +244,7 @@ public:
 				}
 				break;
 			case Escape:
+				speed = 0;
 				stop_engine();
 				get_out();
 				break;
@@ -243,6 +258,8 @@ public:
 		while (driver_inside)
 		{
 			system("CLS");
+			for (int i = 0; i < speed / 3; i++)cout << "|";
+			cout << endl;
 			cout << "Speed:\t" << speed << "km/h\n";
 			cout << "Fuel level: " << tank.get_fuel_level() << " liters\t";
 			if (tank.get_fuel_level() < 5)
@@ -254,6 +271,7 @@ public:
 			}
 			cout << endl;
 			cout << "Engine is " << (engine.started() ? "started" : "stopped") << endl;
+			if (engine.started())cout << "Consumption per second: " << engine.get_consumption_per_second() << " l/s\n";
 			std::this_thread::sleep_for(1s);
 		}
 	}
@@ -271,7 +289,9 @@ public:
 			speed--;
 			if (speed < 0)speed = 0;
 			std::this_thread::sleep_for(1s);
+			engine.correct_consumption(speed);
 		}
+		//engine.correct_consumption(speed);
 	}
 
 	void info()const
@@ -297,7 +317,7 @@ void main()
 		cout << "Введите объем топлива: "; cin >> fuel;
 		tank.fill(fuel);
 		tank.info();
-	}
+}
 #endif // TANK_CHECK
 
 #ifdef ENGINE_CHECK
